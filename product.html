@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff6c7;
+      color: #111;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      display: flex;
+      gap: 60px;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .product-image {
+      flex: 1;
+    }
+
+    .product-image img {
+        position: relative;
+      width: 100%;
+      max-height: 700px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+      border: 10px white solid;
+      margin-right: 80%;
+    }
+
+    .product-details {
+      flex: 1;
+      max-width: 500px;
+    }
+
+    .product-title {
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-transform: lowercase;
+    }
+
+    .price {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: #888;
+      margin-right: 10px;
+    }
+
+    .new-price {
+      font-weight: bold;
+    }
+
+    .sold-out {
+      display: inline-block;
+      background-color: #000;
+      color: #fff;
+      font-size: 14px;
+      padding: 4px 10px;
+      border-radius: 15px;
+      margin-left: 10px;
+    }
+
+    .description {
+      margin: 20px 0;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .copy-button {
+      margin-top: 30px;
+      background-color: #111;
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .copy-button:hover {
+      background-color: #333;
+    }
+
+    .copied-msg {
+      color: green;
+      margin-top: 10px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #333;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .product-details {
+        text-align: center;
+      }
+    }
+    .top-bar a{
+      background-color: #d400ff6e;
+      padding: 10px;
+      text-align: center;
+      color: rgb(247, 247, 247);
+      font-size: 50px;
+      font-weight: bold;
+      font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-left: 40%;
+    padding-right: 40%;
+    }
+
+  </style>
+</head>
+<body>
+    <div class="top-bar"> <a href="index.html" class="back-btn">AnushaEpicEats</a></div>
+  <div class="container">
+  
+    <div class="product-image">
+      <img id="product-img" src="" alt="Product">
+    </div>
+    <div class="product-details">
+      <div class="product-title" id="product-name">Product Name</div>
+      <div class="price">
+        <span id="product-price">Rs. 45.00</span>
+      </div>
+      <div class="description">
+        We create different weight based on customer's demand.<br>
+        Please call us at <strong>+91 9878481932</strong>
+      </div>
+
+      <button class="copy-button" onclick="copyPhone()">📞 Copy Phone Number</button>
+      <div class="copied-msg" id="copied-msg">Phone number copied!</div>
+
+     
+    </div>
+  </div>
+
+  <script>
+    // Product data (keyed by URL param ?name=...)
+    const products = {
+      biscoff: {
+        name: "Biscoff Brownie",
+        price: "Rs. 70.00",
+        image: "LOTUS_BISCOFF_BROWNIE_2.jpg"
+      },
+      cheesecake: {
+        name: "Cheesecake",
+        price: "Rs. 120.00",
+        image: "photos/cheesecake1.jpeg"
+      },
+      classicbrownie: {
+        name: "Classic Brownie",
+        price: "Rs. 60.00",
+        image: "photos/Brownie 1.jpg"
+      },
+      cookies: {
+        name: "Cookies",
+        price: "Rs. 80.00",
+        image: "photos/cookies1.jpeg"
+      },
+      cupcakes: {
+        name: "Cupcakes",
+        price: "Rs. 90.00",
+        image: "photos/cupcakes.jpeg"
+      },
+      glasscake: {
+        name: "Glass Cake",
+        price: "Rs. 110.00",
+        image: "photos/glasscake2.jpeg"
+      },
+      icingcake: {
+        name: "Icing Cake",
+        price: "Rs. 150.00",
+        image: "photos/icingcake.jpeg"
+      },
+      jarcake: {
+        name: "Jar Cake",
+        price: "Rs. 70.00",
+        image: "photos/jarcake1.jpeg"
+      },
+      loafcake: {
+        name: "Loaf Cake",
+        price: "Rs. 80.00",
+        image: "photos/loafcake1.jpeg"
+      },
+      muffins: {
+        name: "Muffins",
+        price: "Rs. 70.00",
+        image: "photos/muffins1.jpeg"
+      },
+      nankhatai: {
+        name: "Nankhatai",
+        price: "Rs. 60.00",
+        image: "photos/nankhatai1.jpeg"
+      },
+      sizzlerbrownie: {
+        name: "Sizzler Brownie",
+        price: "Rs. 100.00",
+        image: "photos/sizzlerbrownie.jpg"
+      },
+      tubcake: {
+        name: "Tub Cake",
+        price: "Rs. 90.00",
+        image: "photos/tubcake1.jpg"
+      },
+      special: {
+        name: "Special",
+        price: "Rs. 150.00",
+        image: "photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg"
+      }
+    };
+
+    // Load product
+    const params = new URLSearchParams(window.location.search);
+    const productKey = params.get("name");
+    const product = products[productKey];
+
+    if (product) {
+      document.getElementById("product-name").textContent = product.name;
+      document.getElementById("product-price").textContent = product.price;
+      document.getElementById("product-img").src = product.image;
+    } else {
+      // Default to first product if no match
+      const firstProduct = Object.values(products)[0];
+      document.getElementById("product-name").textContent = firstProduct.name;
+      document.getElementById("product-price").textContent = firstProduct.price;
+      document.getElementById("product-img").src = firstProduct.image;
+    }
+
+    // Copy phone number to clipboard
+    function copyPhone() {
+      const phone = "+919878481932";
+      navigator.clipboard.writeText(phone).then(() => {
+        const msg = document.getElementById("copied-msg");
+        msg.style.display = "block";
+        setTimeout(() => {
+          msg.style.display = "none";
+        }, 1000);
+      });
+    }
+  </script>
+
+</body>
+</html>
