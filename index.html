@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AnushaEpicEats</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    .top-bar {
+      background-color: #fff9b86e;
+      padding: 10px;
+      text-align: center;
+      color: rgb(239, 122, 247);
+      font-size: 50px;
+      font-weight: bold;
+      font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      height: 90vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 50%;
+      left: 10%;
+      transform: translateY(-50%);
+      color: white;
+      z-index: 2;
+      background-color: rgba(0, 0, 0, 0.069);
+      
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    .overlay p {
+      font-size: 18px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .overlay h2 {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .overlay button {
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.383);
+      color: black;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .overlay button:hover {
+      background: #ddd;
+    }
+    .overlay a{
+        color: black;
+    }
+  
+    h1{
+        text-align: center;
+        font-size: 50px;
+        font-weight: 400;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    .product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px; /* this controls spacing between cards */
+  padding: 50px;
+}
+
+.product-card {
+  width: 300px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 20px;
+}
+
+.product-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-card h3 {
+  margin: 15px 0 5px;
+  font-size: 20px;
+}
+
+.product-card p {
+  color: #444;
+  font-size: 18px;
+}
+  
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">AnushaEpicEats</div>
+
+  <div class="hero-slider">
+    <div class="slide active" style="background-image: url('slide 1.jpg');"></div>
+    <div class="slide" style="background-image: url('slide 2.jpg');"></div>
+    <div class="slide" style="background-image: url('slide 4.jpg');"></div>
+
+    <div class="overlay">
+      
+      <h2>Made With Love</h2>
+      <button><a href="#">Collection</a> </button>
+    </div>
+  </div>
+<h1>OUR PRODUCTS</h1>
+
+<div class="product-list">
+  <div class="product-card">
+    <img src="LOTUS_BISCOFF_BROWNIE_2.jpg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+
+  <div class="product-card">
+    <img src="photos/cheesecake1.jpeg" alt="Cheesecake">
+    <h3>Cheesecake</h3>
+    <p>Rs 120</p>
+  </div>
+
+  <div class="product-card">
+    <img src="photos\Brownie 1.jpg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+    <div class="product-card">
+    <img src="photos\cookies1.jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+    <div class="product-card">
+    <img src="photos\cupcakes.jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+    <div class="product-card">
+    <img src="photos\glasscake2.jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+   <div class="product-card">
+    <img src="photos\icingcake.jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+  <div class="product-card">
+    <img src="photos\images (2).jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+  <div class="product-card">
+    <img src="photos\jarcake1.jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+  <div class="product-card">
+    <img src="photos\loafcake1.jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+  <div class="product-card">
+    <img src="photos\muffins1.jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+  <div class="product-card">
+    <img src="photos\nankhatai1.jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+  <div class="product-card">
+    <img src="photos\sizzlerbrownie.jpg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+  <div class="product-card">
+    <img src="photos\tubcake1.jpg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+  <div class="product-card">
+    <img src="photos\WhatsApp Image 2025-06-01 at 20.53.23.jpeg" alt="Biscoff Brownie">
+    <h3>Biscoff Brownie</h3>
+    <p>Rs 70</p>
+  </div>
+  
+</div>
+
+  
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+
+    setInterval(() => {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }, 3000); // change every 3 seconds
+  </script>
+
+</body>
+</html>
