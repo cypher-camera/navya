@@ -11,42 +11,36 @@
       box-sizing: border-box;
     }
 
-    body, html {
-      font-family: Arial, sans-serif;
-      background-color: #fff;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff;
       color: #333;
     }
 
     .top-bar {
       background-color: #fff9b86e;
-      padding: 10px;
+      padding: 14px;
       text-align: center;
-      color: rgb(239, 122, 247);
-      font-size: 32px;
+      color: #ef7af7;
+      font-size: 30px;
       font-weight: bold;
-      font-family:'Lucida Sans', sans-serif;
     }
 
     .hero-slider {
       position: relative;
       width: 100%;
-      height: 60vh;
+      max-height: 60vh;
       overflow: hidden;
     }
 
     .slide {
-      position: absolute;
       width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
+      display: none;
+      object-fit: cover;
     }
 
     .slide.active {
-      opacity: 1;
-      z-index: 1;
+      display: block;
     }
 
     .overlay {
@@ -55,106 +49,98 @@
       left: 10%;
       transform: translateY(-50%);
       color: white;
-      z-index: 2;
-      background-color: rgba(0, 0, 0, 0.3);
+      background-color: rgba(0, 0, 0, 0.4);
       padding: 20px;
       border-radius: 10px;
-      max-width: 80%;
     }
 
     .overlay h2 {
       font-size: 28px;
-      margin-bottom: 10px;
     }
 
     .overlay button {
+      margin-top: 10px;
       padding: 10px 20px;
-      font-size: 14px;
       border: none;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.7);
+      border-radius: 20px;
+      background: white;
       color: black;
       cursor: pointer;
     }
 
-    .overlay button:hover {
-      background: #ddd;
-    }
-
     .overlay a {
-      color: black;
       text-decoration: none;
+      color: black;
     }
 
     h1 {
       text-align: center;
       font-size: 36px;
-      margin-top: 20px;
+      margin: 30px 0 10px;
     }
 
     .product-list {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 20px;
-      padding: 20px;
+      gap: 24px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
     }
 
     .product-card {
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
       text-align: center;
-      padding: 15px;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
     }
 
     .product-card img {
       width: 100%;
-      height: 160px;
+      height: 180px;
       object-fit: cover;
-      border-radius: 8px;
     }
 
     .product-card h3 {
-      margin: 10px 0 5px;
       font-size: 16px;
+      margin: 10px 0 5px;
     }
 
     .product-card p {
       font-size: 14px;
       color: #444;
+      margin-bottom: 15px;
     }
 
-    @media screen and (max-width: 600px) {
-      .top-bar {
-        font-size: 24px;
+    @media screen and (max-width: 768px) {
+      .overlay {
+        padding: 14px;
+        font-size: 16px;
+        left: 5%;
+        width: 90%;
       }
 
       .overlay h2 {
         font-size: 20px;
       }
 
-      .overlay {
-        padding: 15px;
-      }
-
       .hero-slider {
-        height: 40vh;
+        max-height: 40vh;
       }
 
-      h1 {
-        font-size: 28px;
+      .product-list {
+        padding: 20px;
+        gap: 20px;
       }
 
       .product-card img {
-        height: 130px;
-      }
-
-      .product-card h3 {
-        font-size: 14px;
-      }
-
-      .product-card p {
-        font-size: 13px;
+        height: 140px;
       }
     }
   </style>
@@ -164,25 +150,20 @@
   <div class="top-bar">AnushaEpicEats</div>
 
   <div class="hero-slider">
-    <div class="slide active" style="background-image: url('slide 1.jpg');"></div>
-    <div class="slide" style="background-image: url('slide 2.jpg');"></div>
-    <div class="slide" style="background-image: url('slide 4.jpg');"></div>
+    <img src="slide 1.jpg" class="slide active" alt="Slide 1">
+    <img src="slide 2.jpg" class="slide" alt="Slide 2">
+    <img src="slide 4.jpg" class="slide" alt="Slide 3">
 
     <div class="overlay">
       <h2>Made With Love</h2>
-      <button><a href="#">Collection</a></button>
+      <button><a href="#">Shop Collection</a></button>
     </div>
   </div>
 
-  <h1>OUR PRODUCTS</h1>
+  <h1>Our Products</h1>
 
   <div class="product-list">
-    <div class="product-card">
-      <img src="LOTUS_BISCOFF_BROWNIE_2.jpg" alt="Biscoff Brownie">
-      <h3>Biscoff Brownie</h3>
-      <p>Rs 70</p>
-    </div>
-
+    <!-- Sample Products -->
     <div class="product-card">
       <img src="photos/cheesecake1.jpeg" alt="Cheesecake">
       <h3>Cheesecake</h3>
@@ -219,64 +200,19 @@
       <p>Rs 70</p>
     </div>
 
-    <div class="product-card">
-      <img src="photos/images (2).jpeg" alt="Dessert">
-      <h3>Dessert</h3>
-      <p>Rs 70</p>
-    </div>
-
-    <div class="product-card">
-      <img src="photos/jarcake1.jpeg" alt="Jar Cake">
-      <h3>Jar Cake</h3>
-      <p>Rs 70</p>
-    </div>
-
-    <div class="product-card">
-      <img src="photos/loafcake1.jpeg" alt="Loaf Cake">
-      <h3>Loaf Cake</h3>
-      <p>Rs 70</p>
-    </div>
-
-    <div class="product-card">
-      <img src="photos/muffins1.jpeg" alt="Muffins">
-      <h3>Muffins</h3>
-      <p>Rs 70</p>
-    </div>
-
-    <div class="product-card">
-      <img src="photos/nankhatai1.jpeg" alt="Nankhatai">
-      <h3>Nankhatai</h3>
-      <p>Rs 70</p>
-    </div>
-
-    <div class="product-card">
-      <img src="photos/sizzlerbrownie.jpg" alt="Sizzler Brownie">
-      <h3>Sizzler Brownie</h3>
-      <p>Rs 70</p>
-    </div>
-
-    <div class="product-card">
-      <img src="photos/tubcake1.jpg" alt="Tub Cake">
-      <h3>Tub Cake</h3>
-      <p>Rs 70</p>
-    </div>
-
-    <div class="product-card">
-      <img src="photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg" alt="Custom Dessert">
-      <h3>Custom Dessert</h3>
-      <p>Rs 70</p>
-    </div>
+    <!-- Add more as needed... -->
   </div>
 
   <script>
     const slides = document.querySelectorAll('.slide');
-    let current = 0;
+    let currentSlide = 0;
 
     setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
     }, 3000);
   </script>
+
 </body>
 </html>
