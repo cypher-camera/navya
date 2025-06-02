@@ -2,260 +2,267 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AnushaEpicEats</title>
   <style>
+    /* Reset default styles */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    body, html {
-      height: 100%;
+    body {
       font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f9f9f9;
     }
 
-    .top-bar {
-      background-color: #fff9b86e;
-      padding: 10px;
+    /* Container for content */
+    .container {
+      max-width: 100%;
+      padding: 1rem;
+      margin: 0 auto;
+    }
+
+    /* Header styles */
+    header {
       text-align: center;
-      color: rgb(239, 122, 247);
-      font-size: 50px;
-      font-weight: bold;
-      font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      padding: 1rem;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .hero-slider {
-      position: relative;
-      width: 100%;
-      height: 90vh;
-      overflow: hidden;
+    header h1 {
+      font-size: 1.5rem;
+      color: #e91e63;
     }
 
-    .slide {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .slide.active {
-      opacity: 1;
-      z-index: 1;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 50%;
-      left: 10%;
-      transform: translateY(-50%);
-      color: white;
-      z-index: 2;
-      background-color: rgba(0, 0, 0, 0.069);
-      padding: 30px;
-      border-radius: 10px;
-    }
-
-    .overlay h2 {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
-
-    .overlay button {
-      padding: 12px 25px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.383);
-      color: black;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    .overlay button:hover {
-      background: #ddd;
-    }
-
-    .overlay a {
-      color: black;
-      text-decoration: none;
-    }
-
-    h1 {
+    /* Banner section */
+    .banner {
       text-align: center;
-      font-size: 50px;
-      font-weight: 400;
-      margin-top: 40px;
+      margin: 1rem 0;
     }
 
-    .product-list {
+    .banner img {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      object-fit: cover;
+    }
+
+    .banner h2 {
+      font-size: 1.2rem;
+      color: #e91e63;
+      margin-top: 0.5rem;
+    }
+
+    /* Product section */
+    .product-section {
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .product-section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .product-grid {
       display: flex;
       flex-wrap: wrap;
+      gap: 1rem;
       justify-content: center;
-      gap: 40px;
-      padding: 50px;
     }
 
     .product-card {
-      width: 300px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 280px;
       text-align: center;
-      padding: 20px;
-      text-decoration: none;
-      color: black;
-      transition: transform 0.2s;
-    }
-
-    .product-card:hover {
-      transform: scale(1.05);
+      padding: 1rem;
     }
 
     .product-card img {
       width: 100%;
-      height: 250px;
+      height: 200px;
       object-fit: cover;
       border-radius: 8px;
     }
 
     .product-card h3 {
-      margin: 15px 0 5px;
-      font-size: 20px;
+      font-size: 1.2rem;
+      margin: 0.5rem 0;
+      color: #333;
     }
 
     .product-card p {
-      color: #444;
-      font-size: 18px;
+      font-size: 1rem;
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    /* Button styles */
+    button {
+      background-color: #e91e63;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      touch-action: manipulation;
+    }
+
+    button:hover {
+      background-color: #c2185b;
+    }
+
+    /* Media Queries for Desktop */
+    @media (min-width: 768px) {
+      .container {
+        max-width: 1200px;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .banner h2 {
+        font-size: 1.5rem;
+      }
+
+      .product-section h2 {
+        font-size: 2.2rem;
+      }
+
+      .product-card {
+        width: calc(25% - 1rem); /* 4 cards per row */
+      }
+
+      .product-card h3 {
+        font-size: 1.4rem;
+      }
+
+      .product-card p {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* Adjustments for very small screens */
+    @media (max-width: 400px) {
+      .product-card {
+        max-width: 100%;
+      }
+
+      .product-card img {
+        height: 180px;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>AnushaEpicEats</h1>
+  </header>
 
-  <div class="top-bar">AnushaEpicEats</div>
-
-  <div class="hero-slider">
-    <div class="slide active" style="background-image: url('slide 1.jpg');"></div>
-    <div class="slide" style="background-image: url('slide 2.jpg');"></div>
-    <div class="slide" style="background-image: url('slide 4.jpg');"></div>
-
-    <div class="overlay">
+  <div class="container">
+    <section class="banner">
+      <img src="banner-image.jpg" alt="Bakery Banner">
       <h2>Made With Love</h2>
-      <button><a href="#">Collection</a></button>
-    </div>
+      <button>Collection</button>
+    </section>
+
+    <section class="product-section">
+      <h2>OUR PRODUCTS</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <img src="images/biscoff_brownie.jpg" alt="Biscoff Brownie">
+          <h3>Biscoff Brownie</h3>
+          <p>Rs 70</p>
+        </div>
+        <div class="product-card">
+          <img src="images/cheesecake.jpg" alt="Cheesecake">
+          <h3>Cheesecake</h3>
+          <p>Rs 120</p>
+        </div>
+        <div class="product-card">
+          <img src="images/classic_brownie.jpg" alt="Classic Brownie">
+          <h3>Classic Brownie</h3>
+          <p>Rs 60</p>
+        </div>
+        <div class="product-card">
+          <img src="images/cookies.jpg" alt="Cookies">
+          <h3>Cookies</h3>
+          <p>Rs 80</p>
+        </div>
+        <div class="product-card">
+          <img src="images/cupcakes.jpg" alt="Cupcakes">
+          <h3>Cupcakes</h3>
+          <p>Rs 90</p>
+        </div>
+        <div class="product-card">
+          <img src="images/glass_cake.jpg" alt="Glass Cake">
+          <h3>Glass Cake</h3>
+          <p>Rs 110</p>
+        </div>
+        <div class="product-card">
+          <img src="images/icing_cake.jpg" alt="Icing Cake">
+          <h3>Icing Cake</h3>
+          <p>Rs 150</p>
+        </div>
+        <div class="product-card">
+          <img src="images/jar_cake.jpg" alt="Jar Cake">
+          <h3>Jar Cake</h3>
+          <p>Rs 70</p>
+        </div>
+        <div class="product-card">
+          <img src="images/loaf_cake.jpg" alt="Loaf Cake">
+          <h3>Loaf Cake</h3>
+          <p>Rs 80</p>
+        </div>
+        <div class="product-card">
+          <img src="images/muffins.jpg" alt="Muffins">
+          <h3>Muffins</h3>
+          <p>Rs 70</p>
+        </div>
+        <div class="product-card">
+          <img src="images/nankhatai.jpg" alt="Nankhatai">
+          <h3>Nankhatai</h3>
+          <p>Rs 60</p>
+        </div>
+        <div class="product-card">
+          <img src="images/sizzler_brownie.jpg" alt="Sizzler Brownie">
+          <h3>Sizzler Brownie</h3>
+          <p>Rs 100</p>
+        </div>
+        <div class="product-card">
+          <img src="images/tub_cake.jpg" alt="Tub Cake">
+          <h3>Tub Cake</h3>
+          <p>Rs 90</p>
+        </div>
+        <div class="product-card">
+          <img src="images/thandai_powder.jpg" alt="Thandai Powder">
+          <h3>Thandai Powder</h3>
+          <p>Rs 150</p>
+        </div>
+        <div class="product-card">
+          <img src="images/donut.jpg" alt="Donut">
+          <h3>Donut</h3>
+          <p>Rs 90</p>
+        </div>
+        <div class="product-card">
+          <img src="images/dry_cake.jpg" alt="DryCake">
+          <h3>DryCake</h3>
+          <p>Rs 90</p>
+        </div>
+      </div>
+    </section>
   </div>
-
-  <h1>OUR PRODUCTS</h1>
-
-  <div class="product-list">
-    <a class="product-card" href="product.html?name=biscoff">
-      <img src="biscoffbrownie.jpg" alt="Biscoff Brownie">
-      <h3>Biscoff Brownie</h3>
-      <p>Rs 70</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=cheesecake">
-      <img src="photos/cheesecake1.jpeg" alt="Cheesecake">
-      <h3>Cheesecake</h3>
-      <p>Rs 120</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=classicbrownie">
-      <img src="photos/Brownie 1.jpg" alt="Classic Brownie">
-      <h3>Classic Brownie</h3>
-      <p>Rs 60</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=cookies">
-      <img src="photos/cookies1.jpeg" alt="Cookies">
-      <h3>Cookies</h3>
-      <p>Rs 80</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=cupcakes">
-      <img src="photos/cupcakes.jpeg" alt="Cupcakes">
-      <h3>Cupcakes</h3>
-      <p>Rs 90</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=glasscake">
-      <img src="photos/glasscake2.jpeg" alt="Glass Cake">
-      <h3>Glass Cake</h3>
-      <p>Rs 110</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=icingcake">
-      <img src="photos/icingcake.jpeg" alt="Icing Cake">
-      <h3>Icing Cake</h3>
-      <p>Rs 150</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=jarcake">
-      <img src="photos/jarcake1.jpeg" alt="Jar Cake">
-      <h3>Jar Cake</h3>
-      <p>Rs 70</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=loafcake">
-      <img src="photos/loafcake1.jpeg" alt="Loaf Cake">
-      <h3>Loaf Cake</h3>
-      <p>Rs 80</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=muffins">
-      <img src="photos/muffins1.jpeg" alt="Muffins">
-      <h3>Muffins</h3>
-      <p>Rs 70</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=nankhatai">
-      <img src="photos/nankhatai1.jpeg" alt="Nankhatai">
-      <h3>Nankhatai</h3>
-      <p>Rs 60</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=sizzlerbrownie">
-      <img src="photos/sizzlerbrownie.jpg" alt="Sizzler Brownie">
-      <h3>Sizzler Brownie</h3>
-      <p>Rs 100</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=tubcake">
-      <img src="photos/tubcake1.jpg" alt="Tub Cake">
-      <h3>Tub Cake</h3>
-      <p>Rs 90</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=special">
-      <img src="photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg" alt="Special">
-      <h3>Thandai Powder</h3>
-      <p>Rs 150</p>
-    </a>
-     <a class="product-card" href="product.html?name=cupcakes">
-      <img src="photos\donut1.webp" alt="Cupcakes">
-      <h3>Donut</h3>
-      <p>Rs 90</p>
-    </a>
-    <a class="product-card" href="product.html?name=cupcakes">
-      <img src="drycake.jpg" alt="Cupcakes">
-      <h3>DryCake</h3>
-      <p>Rs 90</p>
-    </a>
-  </div>
-
-  <script>
-    const slides = document.querySelectorAll('.slide');
-    let current = 0;
-
-    setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 3000);
-  </script>
-
 </body>
 </html>
