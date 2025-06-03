@@ -35,18 +35,17 @@
 
     .slide {
       position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transition: opacity 1s ease-in-out;
-      z-index: 0;
+      transform: scale(1.1);
+      transition: opacity 1s ease-in-out, transform 1s ease-in-out;
     }
 
     .slide.active {
       opacity: 1;
+      transform: scale(1);
       z-index: 1;
     }
 
@@ -61,17 +60,19 @@
       border-radius: 30px;
       font-size: 22px;
       font-weight: bold;
+      box-shadow: 0 8px 20px rgba(239, 122, 247, 0.4);
+      text-shadow: 1px 1px 2px rgba(239, 122, 247, 0.6);
     }
 
     h1 {
       text-align: center;
       font-size: 36px;
-      margin: 40px 0 20px;
+      margin: 30px 0 10px;
     }
 
     .product-list {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 24px;
       padding: 30px;
       max-width: 1200px;
@@ -80,63 +81,50 @@
 
     .product-card {
       background: #fff;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
       text-align: center;
       padding: 16px;
-      transition: transform 0.2s;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card:hover {
+      transform: rotateY(5deg) rotateX(5deg) scale(1.03);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     }
 
     .product-card img {
       width: 100%;
-      height: auto;
+      height: 200px;
+      object-fit: cover;
       border-radius: 8px;
     }
 
-    .product-card:hover {
-      transform: scale(1.03);
-    }
-
     .product-card h3 {
-      font-size: 16px;
+      font-size: 18px;
       margin: 10px 0 5px;
     }
 
     .product-card p {
       font-size: 14px;
       color: #444;
-      margin-bottom: 15px;
-    }
-
-    @media screen and (max-width: 1024px) {
-      .product-list {
-        grid-template-columns: repeat(3, 1fr);
-        padding: 20px;
-        gap: 20px;
-      }
     }
 
     @media screen and (max-width: 600px) {
-      .product-list {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 16px;
-        gap: 16px;
+      .hero-slider {
+        height: 40vh;
       }
 
-      .product-card {
-        padding: 12px;
+      .overlay {
+        font-size: 16px;
+        padding: 10px 20px;
       }
 
       .product-card img {
         height: 150px;
-        object-fit: cover;
-      }
-
-      .overlay {
-        font-size: 18px;
-        padding: 10px 20px;
-        bottom: 10px;
       }
     }
   </style>
@@ -148,15 +136,14 @@
   <div class="hero-slider">
     <img src="slide 1.jpg" class="slide active" alt="Slide 1">
     <img src="slide 2.jpg" class="slide" alt="Slide 2">
-
-    <img src="slide 4.jpg" class="slide" alt="Slide 4">
+    <img src="slide 4.jpg" class="slide" alt="Slide 3">
 
     <div class="overlay">Made With Love 💖</div>
   </div>
 
   <h1>OUR PRODUCTS</h1>
 
-  <div class="product-list">
+   <div class="product-list">
     <a class="product-card" href="product.html?name=biscoff">
       <img src="biscoffbrownie.jpg" alt="Biscoff Brownie">
       <h3>Biscoff Brownie</h3>
@@ -256,12 +243,12 @@
 
   <script>
     const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
+    let current = 0;
 
     setInterval(() => {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
     }, 3000);
   </script>
 
