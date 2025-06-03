@@ -79,9 +79,33 @@
       margin: 30px 0 10px;
     }
 
- .product-list {
+  .product-list {
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: repeat(5, 1fr); /* ✅ 5 columns on desktop */
+  gap: 24px;
+  padding: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+@media screen and (max-width: 1024px) {
+  .product-list {
+    grid-template-columns: repeat(3, 1fr); /* ✅ 3 columns on tablets */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .product-list {
+    grid-template-columns: repeat(2, 1fr); /* ✅ 2 columns on phones */
+    gap: 16px;
+    padding: 20px;
+  }
+}
+
+
+   .product-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 24px;
   padding: 30px;
   max-width: 1200px;
@@ -94,19 +118,24 @@
   overflow: hidden;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
   text-align: center;
-  gap: 1000px;
+  padding: 16px;
   transition: transform 0.2s;
-  max-height: 500px;
-  
 }
 
 .product-card img {
-  width: 400px;
+  width: 100%;
+  height: auto;
   border-radius: 8px;
-  height: 350px;
- 
 }
 
+/* Tablet view - 3 columns */
+@media screen and (max-width: 1024px) {
+  .product-list {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 20px;
+    gap: 20px;
+  }
+}
 
 /* Mobile view - 2 larger cards */
 @media screen and (max-width: 600px) {
@@ -114,9 +143,6 @@
     grid-template-columns: repeat(2, 1fr);
     padding: 16px;
     gap: 16px;
-     width: 400px;
-  border-radius: 8px;
-  height: 350px;
   }
 
   .product-card {
@@ -124,12 +150,12 @@
   }
 
   .product-card img {
-   
+    height: 150px;
     object-fit: cover;
   }
-  .hero-slider{
-    height: 600px;
-  }
+}
+.product-card:hover {
+  transform: scale(1.03);
 }
 
 
@@ -157,7 +183,7 @@
       }
 
       .hero-slider {
-        max-height: 60vh;
+        max-height: 40vh;
       }
 
       .product-list {
@@ -179,22 +205,18 @@
     <img src="slide 1.jpg" class="slide active" alt="Slide 1">
     <img src="slide 2.jpg" class="slide" alt="Slide 2">
     <img src="slide 4.jpg" class="slide" alt="Slide 3">
-  <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-60 text-white text-center p-6">
-    <p class="text-sm uppercase tracking-widest">Top Collections</p>
-    <h2 class="text-3xl font-bold my-2">Limited Edition</h2>
-    <a href="#collections" class="inline-block bg-white text-black px-5 py-2 rounded-full mt-2 hover:bg-gray-200 transition">
-      Shop Collection
-    </a></div>
+
+    <div class="overlay">
+      <h2>Made With Love</h2>
+      <button><a href="#">Shop Collection</a></button>
+    </div>
   </div>
-
-   
-
 
   <h1>OUR PRODUCTS</h1>
 
   <div class="product-list">
     <a class="product-card" href="product.html?name=biscoff">
-      <img src="biscoffbrownie.jpg" alt="Biscoff Brownie">
+      <img src="LOTUS_BISCOFF_BROWNIE_2.jpg" alt="Biscoff Brownie">
       <h3>Biscoff Brownie</h3>
       <p>Rs 70</p>
     </a>
