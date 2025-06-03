@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AnushaEpicEats</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AnushaEpicEats - 3D Bakery Carousel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -13,24 +14,42 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #fff;
+      background: linear-gradient(135deg, #fff9e6 0%, #fff0f8 100%);
       color: #333;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .top-bar {
-      background-color: #fff9b86e;
-      padding: 14px;
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
+      padding: 18px;
       text-align: center;
-      color: #ef7af7;
-      font-size: 30px;
+      color: white;
+      font-size: 32px;
       font-weight: bold;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(239, 122, 247, 0.4);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      font-family: 'Brush Script MT', cursive;
+      letter-spacing: 2px;
     }
 
     .hero-slider {
       position: relative;
       width: 100%;
-      height: 60vh;
+      height: 65vh;
       overflow: hidden;
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+      margin-bottom: 40px;
+      
     }
 
     .slide {
@@ -51,66 +70,298 @@
 
     .overlay {
       position: absolute;
-      bottom: 5%;
+      bottom: 8%;
       left: 50%;
       transform: translateX(-50%);
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: rgba(255, 255, 255, 0.85);
       color: #ef7af7;
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-size: 22px;
+      padding: 14px 32px;
+      border-radius: 40px;
+      font-size: 26px;
       font-weight: bold;
-      box-shadow: 0 8px 20px rgba(239, 122, 247, 0.4);
+      box-shadow: 0 8px 25px rgba(239, 122, 247, 0.5);
       text-shadow: 1px 1px 2px rgba(239, 122, 247, 0.6);
+      animation: pulse 2s infinite;
+      font-family: 'Dancing Script', cursive;
+    }
+
+    @keyframes pulse {
+      0% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+      100% { transform: translateX(-50%) scale(1); }
     }
 
     h1 {
       text-align: center;
-      font-size: 36px;
-      margin: 30px 0 10px;
+      font-size: 42px;
+      margin: 30px 0 20px;
+      color: #ef7af7;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+      display: inline-block;
+      padding: 0 20px;
     }
 
-    .product-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-      padding: 30px;
+    h1:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
+      border-radius: 2px;
+    }
+
+    /* 3D Carousel Styles */
+    .carousel-wrapper {
+      position: relative;
       max-width: 1200px;
-      margin: auto;
+      width: 90%;
+      height: 500px;
+      margin: 40px auto;
+      perspective: 2000px;
+      overflow: hidden;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
     }
 
     .product-card {
-      background: #fff;
-      border-radius: 12px;
+      position: absolute;
+      width: 320px;
+      height: 420px;
+      background: white;
+      border-radius: 20px;
       overflow: hidden;
       text-align: center;
-      padding: 16px;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      padding: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      cursor: pointer;
       transform-style: preserve-3d;
-      perspective: 1000px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .product-card:hover {
-      transform: rotateY(5deg) rotateX(5deg) scale(1.03);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .product-card img {
       width: 100%;
-      height: 200px;
+      height: 240px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 12px;
+      transition: all 0.5s ease;
+      transform: translateZ(30px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card.center img {
+      transform: translateZ(50px) scale(1.05);
     }
 
     .product-card h3 {
-      font-size: 18px;
-      margin: 10px 0 5px;
+      font-size: 22px;
+      margin: 15px 0 8px;
+      color: #333;
+      transform: translateZ(20px);
     }
 
     .product-card p {
-      font-size: 14px;
-      color: #444;
+      font-size: 20px;
+      color: #ef7af7;
+      font-weight: bold;
+      transform: translateZ(20px);
+    }
+
+    .product-card.center {
+      border: 4px dashed #ef7af7;
+      box-shadow: 0 25px 50px rgba(239, 122, 247, 0.4);
+      z-index: 10;
+      transform: translateX(-50%) translateZ(100px);
+    }
+
+    .product-card.center .product-info {
+      background: linear-gradient(to right, #ffefef, #fff0f9);
+      padding: 12px;
+      border-radius: 15px;
+      transform: translateZ(30px);
+    }
+
+    .product-card.left {
+      transform: translateX(-140%) translateZ(50px) rotateY(20deg);
+      opacity: 0.9;
+      filter: brightness(0.95);
+      z-index: 5;
+    }
+
+    .product-card.right {
+      transform: translateX(40%) translateZ(50px) rotateY(-20deg);
+      opacity: 0.9;
+      filter: brightness(0.95);
+      z-index: 5;
+    }
+
+    .product-card.hidden {
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .product-info {
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      transition: all 0.4s ease;
+    }
+
+    .product-card:hover .product-info {
+      background: linear-gradient(to right, #ffefef, #fff0f9);
+      transform: translateY(-5px) translateZ(10px);
+    }
+
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      gap: 20px;
+    }
+
+    .carousel-btn {
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
+      border: none;
+      color: white;
+      font-size: 24px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(239, 122, 247, 0.5);
+      transition: all 0.3s ease;
+      transform: translateZ(0);
+    }
+
+    .carousel-btn:hover {
+      transform: scale(1.1) translateZ(10px);
+      box-shadow: 0 12px 25px rgba(239, 122, 247, 0.7);
+    }
+
+    .carousel-btn:active {
+      transform: scale(0.95) translateZ(5px);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      gap: 15px;
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #e0c1e8;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      transform: translateZ(0);
+    }
+
+    .dot.active {
+      background: #ef7af7;
+      transform: scale(1.4);
+      box-shadow: 0 0 10px rgba(239, 122, 247, 0.8);
+    }
+
+    .footer {
+      margin-top: 60px;
+      text-align: center;
+      padding: 30px;
+      color: #ef7af7;
+      font-size: 18px;
+      background: rgba(255, 255, 255, 0.7);
+      width: 100%;
+      border-top: 2px dashed #ef7af7;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
+      border-radius: 50%;
+      color: white;
+      font-size: 24px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      transform: translateZ(0);
+    }
+
+    .social-icons a:hover {
+      transform: translateY(-5px) scale(1.1) translateZ(10px);
+      box-shadow: 0 8px 15px rgba(239, 122, 247, 0.6);
+    }
+
+    /* Animation for product cards */
+    @keyframes float {
+      0% { transform: translateX(-50%) translateY(0) translateZ(0); }
+      50% { transform: translateX(-50%) translateY(-15px) translateZ(10px); }
+      100% { transform: translateX(-50%) translateY(0) translateZ(0); }
+    }
+
+    .product-card.center {
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* Responsive design */
+    @media screen and (max-width: 900px) {
+      .carousel-wrapper {
+        height: 400px;
+      }
+      
+      .product-card {
+        width: 260px;
+        height: 360px;
+      }
+      
+      .product-card img {
+        height: 180px;
+      }
+      
+      .product-card.left {
+        transform: translateX(-130%) translateZ(50px) rotateY(20deg);
+      }
+      
+      .product-card.right {
+        transform: translateX(30%) translateZ(50px) rotateY(-20deg);
+      }
     }
 
     @media screen and (max-width: 600px) {
@@ -119,12 +370,42 @@
       }
 
       .overlay {
-        font-size: 16px;
+        font-size: 18px;
         padding: 10px 20px;
+        width: 90%;
+        text-align: center;
       }
-
+      
+      h1 {
+        font-size: 32px;
+      }
+      
+      .carousel-wrapper {
+        height: 350px;
+        perspective: 1200px;
+      }
+      
+      .product-card {
+        width: 220px;
+        height: 320px;
+      }
+      
       .product-card img {
         height: 150px;
+      }
+      
+      .carousel-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+      
+      .product-card.left {
+        transform: translateX(-120%) translateZ(50px) rotateY(20deg);
+      }
+      
+      .product-card.right {
+        transform: translateX(20%) translateZ(50px) rotateY(-20deg);
       }
     }
   </style>
@@ -134,122 +415,261 @@
   <div class="top-bar">AnushaEpicEats</div>
 
   <div class="hero-slider">
-    <img src="slide 1.jpg" class="slide active" alt="Slide 1">
-    <img src="slide 2.jpg" class="slide" alt="Slide 2">
-    <img src="slide 4.jpg" class="slide" alt="Slide 3">
-
-    <div class="overlay">Made With Love 💖</div>
+    <img src="https://images.unsplash.com/photo-1565958011703-72f8583c477b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="slide active" alt="Delicious Desserts">
+    <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80" class="slide" alt="Colorful Cupcakes">
+    <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="slide" alt="Assorted Pastries">
+    <div class="overlay">Made With Love & Passion 💖</div>
   </div>
 
   <h1>OUR PRODUCTS</h1>
-
-   <div class="product-list">
-    <a class="product-card" href="product.html?name=biscoff">
-      <img src="biscoffbrownie.jpg" alt="Biscoff Brownie">
-      <h3>Biscoff Brownie</h3>
-      <p>Rs 70</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=cheesecake">
-      <img src="photos/cheesecake1.jpeg" alt="Cheesecake">
-      <h3>Cheesecake</h3>
-      <p>Rs 170</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=classicbrownie">
-      <img src="photos/Brownie 1.jpg" alt="Classic Brownie">
-      <h3>Walnut Brownie</h3>
-      <p>Rs 45</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=cookies">
-      <img src="photos/cookies1.jpeg" alt="Cookies">
-      <h3>Finger Cookies/kg</h3>
-      <p>Rs 700</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=cupcakes">
-      <img src="photos/cupcakes.jpeg" alt="Cupcakes">
-      <h3>Cupcakes</h3>
-      <p>Rs 50</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=glasscake">
-      <img src="photos/glasscake2.jpeg" alt="Glass Cake">
-      <h3>Glass Cake</h3>
-      <p>Rs 70</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=icingcake">
-      <img src="photos/icingcake.jpeg" alt="Icing Cake">
-      <h3>Icing Cake</h3>
-      <p>Rs 600</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=jarcake">
-      <img src="photos/jarcake1.jpeg" alt="Jar Cake">
-      <h3>Jar Cake</h3>
-      <p>Rs 150</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=loafcake">
-      <img src="photos/loafcake1.jpeg" alt="Loaf Cake">
-      <h3>Loaf Cake</h3>
-      <p>Rs 50</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=muffins">
-      <img src="photos/muffins1.jpeg" alt="Muffins">
-      <h3>Muffins</h3>
-      <p>Rs 80</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=nankhatai">
-      <img src="photos/nankhatai1.jpeg" alt="Nankhatai">
-      <h3>Nankhatai/kg</h3>
-      <p>Rs 700</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=sizzlerbrownie">
-      <img src="photos/sizzlerbrownie.jpg" alt="Sizzler Brownie">
-      <h3>Sizzler Brownie</h3>
-      <p>Rs 45</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=tubcake">
-      <img src="photos/tubcake1.jpg" alt="Tub Cake">
-      <h3>Tub Cake</h3>
-      <p>Rs 250</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=special">
-      <img src="photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg" alt="Special">
-      <h3>Thandai Powder</h3>
-      <p>Rs 190</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=donut">
-      <img src="photos/donut1.webp" alt="Donut">
-      <h3>Donut</h3>
-      <p>Rs 60</p>
-    </a>
-
-    <a class="product-card" href="product.html?name=drycake">
-      <img src="drycake.jpg" alt="Dry Cake">
-      <h3>Dry Cake</h3>
-      <p>Rs 150</p>
-    </a>
+  
+  <div class="carousel-wrapper">
+    <div class="carousel-container" id="carouselContainer">
+      <!-- Product cards will be generated dynamically -->
+    </div>
+  </div>
+  
+  <div class="carousel-nav">
+    <button class="carousel-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  
+  <div class="carousel-dots" id="carouselDots">
+    <!-- Dots will be generated dynamically -->
+  </div>
+  
+  <div class="footer">
+    <p>Follow us for daily sweet inspirations!</p>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+    <p style="margin-top: 20px;">© 2023 AnushaEpicEats. All rights reserved.</p>
   </div>
 
   <script>
-    const slides = document.querySelectorAll('.slide');
-    let current = 0;
+    // Sample product data
+    const products = [
+  // Sample product data
 
+      {
+        name: "biscoff",
+        title: "Biscoff Brownie",
+        price: "Rs 70",
+        image: "biscoffbrownie.jpg"
+      },
+      {
+        name: "cheesecake",
+        title: "Cheesecake",
+        price: "Rs 170",
+        image: "photos/cheesecake1.jpeg"
+      },
+      {
+        name: "classicbrownie",
+        title: "Walnut Brownie",
+        price: "Rs 45",
+        image: "photos/Brownie 1.jpg"
+      },
+      {
+        name: "cookies",
+        title: "Finger Cookies/kg",
+        price: "Rs 700",
+        image: "photos/cookies1.jpeg"
+      },
+      {
+        name: "cupcakes",
+        title: "Cupcakes",
+        price: "Rs 50",
+        image: "photos/cupcakes.jpeg"
+      },
+      {
+        name: "glasscake",
+        title: "Glass Cake",
+        price: "Rs 70",
+        image: "photos/glasscake2.jpeg"
+      },
+      {
+        name: "icingcake",
+        title: "Icing Cake",
+        price: "Rs 600",
+        image: "photos/icingcake.jpeg"
+      },
+      {
+        name: "jarcake",
+        title: "Jar Cake",
+        price: "Rs 150",
+        image: "photos/jarcake1.jpeg"
+      },
+      {
+        name: "loafcake",
+        title: "Loaf Cake",
+        price: "Rs 50",
+        image: "photos/loafcake1.jpeg"
+      },
+      {
+        name: "muffins",
+        title: "Muffins",
+        price: "Rs 80",
+        image: "photos/muffins1.jpeg"
+      },
+      {
+        name: "nankhatai",
+        title: "Nankhatai/kg",
+        price: "Rs 700",
+        image: "photos/nankhatai1.jpeg"
+      },
+      {
+        name: "sizzlerbrownie",
+        title: "Sizzler Brownie",
+        price: "Rs 45",
+        image: "photos/sizzlerbrownie.jpg"
+      },
+      {
+        name: "tubcake",
+        title: "Tub Cake",
+        price: "Rs 250",
+        image: "photos/tubcake1.jpg"
+      },
+    
+      {
+        name: "donut",
+        title: "Donut",
+        price: "Rs 60",
+        image: "photos/donut1.webp"
+      },
+      {
+        name: "drycake",
+        title: "Dry Cake",
+        price: "Rs 150",
+        image: "drycake.jpg"
+      },
+      {
+        name: "Special",
+        title: "Thandai Powder",
+        price: "Rs 190",
+        image: "photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg"
+   }
+
+    ];
+
+    // Hero Slider
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
     setInterval(() => {
-      slides[current].classList.remove('active');
-      current = (current + 1) % slides.length;
-      slides[current].classList.add('active');
-    }, 3000);
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 4000);
+
+    // Carousel functionality
+    const carouselContainer = document.getElementById('carouselContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const carouselDots = document.getElementById('carouselDots');
+    
+    let currentIndex = 0;
+    
+    // Generate product cards
+    function generateProductCards() {
+      carouselContainer.innerHTML = '';
+      
+      products.forEach((product, index) => {
+        const card = document.createElement('a');
+        card.className = 'product-card';
+        card.href = `product.html?name=${product.name}`;
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.title}">
+          <div class="product-info">
+            <h3>${product.title}</h3>
+            <p>${product.price}</p>
+          </div>
+        `;
+        carouselContainer.appendChild(card);
+      });
+      
+      // Initialize positions
+      updateCarousel();
+    }
+    
+    // Generate dots for navigation
+    function generateDots() {
+      carouselDots.innerHTML = '';
+      
+      for (let i = 0; i < products.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+          currentIndex = i;
+          updateCarousel();
+        });
+        carouselDots.appendChild(dot);
+      }
+    }
+    
+    // Update carousel display
+    function updateCarousel() {
+      const cards = document.querySelectorAll('.product-card');
+      
+      // Remove all classes and reset positions
+      cards.forEach((card, index) => {
+        card.classList.remove('left', 'center', 'right', 'hidden');
+        card.style.display = 'block';
+      });
+      
+      // Position cards based on currentIndex
+      cards.forEach((card, index) => {
+        if (index === currentIndex) {
+          card.classList.add('center');
+        } else if (index === currentIndex - 1) {
+          card.classList.add('left');
+        } else if (index === currentIndex + 1) {
+          card.classList.add('right');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      
+      // Update dots
+      document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+      
+      // Update button states
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === products.length - 1;
+    }
+    
+    // Next product
+    function nextProduct() {
+      if (currentIndex < products.length - 1) {
+        currentIndex++;
+        updateCarousel();
+      }
+    }
+    
+    // Previous product
+    function prevProduct() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    }
+    
+    // Initialize carousel
+    function initCarousel() {
+      generateProductCards();
+      generateDots();
+      
+      // Add event listeners
+      prevBtn.addEventListener('click', prevProduct);
+      nextBtn.addEventListener('click', nextProduct);
+    }
+    
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', initCarousel);
   </script>
 
 </body>
