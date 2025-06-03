@@ -26,49 +26,66 @@
       font-weight: bold;
     }
 
-    .hero-slider {
+.hero-slider {
   position: relative;
   width: 100%;
-  height: 500px; /* Fixed height for uniformity */
+  max-height: 60vh;
   overflow: hidden;
 }
 
+
 .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100%;
-  display: none;
-  object-fit: cover; /* Ensures image fills frame nicely */
+  height: auto;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 0;
 }
 
+.slide.active {
+  opacity: 1;
+  z-index: 1;
+}
 
-    .slide.active {
-      display: block;
-    }
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  color: white;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  border-radius: 10px;
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: slideIn 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
 
-    .overlay {
-      position: absolute;
-      top: 50%;
-      left: 10%;
-      transform: translateY(-50%);
-      color: white;
-      background-color: rgba(0, 0, 0, 0.4);
-      padding: 20px;
-      border-radius: 10px;
-    }
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
     .overlay h2 {
       font-size: 28px;
     }
 
-    .overlay button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 20px;
-      background: white;
-      color: black;
-      cursor: pointer;
-    }
+ .overlay button,
+.overlay a {
+  transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.overlay button:hover {
+  transform: scale(1.05);
+  background-color: #ffefef;
+}
+
 
     .overlay a {
       text-decoration: none;
@@ -197,6 +214,17 @@
         height: 140px;
       }
     }
+    .fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
   </style>
 </head>
 <body>
@@ -345,7 +373,24 @@
       slides[currentSlide].classList.remove('active');
       currentSlide = (currentSlide + 1) % slides.length;
       slides[currentSlide].classList.add('active');
+      
     }, 3000);
+  const cards = document.querySelectorAll('.product-card');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach(card => {
+    card.classList.add('fade-in');
+    observer.observe(card);
+  });
+
+
   </script>
 
 </body>
