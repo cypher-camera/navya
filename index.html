@@ -27,17 +27,19 @@
     }
 
     .hero-slider {
-      position: relative;
-      width: 100%;
-      max-height: 60vh;
-      overflow: hidden;
-    }
+  position: relative;
+  width: 100%;
+  height: 500px; /* Fixed height for uniformity */
+  overflow: hidden;
+}
 
-    .slide {
-      width: 100%;
-      display: none;
-      object-fit: cover;
-    }
+.slide {
+  width: 100%;
+  height: 100%;
+  display: none;
+  object-fit: cover; /* Ensures image fills frame nicely */
+}
+
 
     .slide.active {
       display: block;
@@ -210,6 +212,30 @@
       <h2>Made With Love</h2>
       <button><a href="#">Shop Collection</a></button>
     </div>
+    <div style="
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1a1a1a;
+  color: white;
+  text-align: center;
+  padding: 24px 12px;">
+  <p style="text-transform: uppercase; letter-spacing: 1px; font-size: 14px; margin: 0;">Top Collections</p>
+  <h2 style="font-size: 28px; margin: 8px 0;">Limited Edition</h2>
+  <a href="#collections" style="
+    display: inline-block;
+    background: white;
+    color: black;
+    padding: 10px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 10px;">
+    Shop Collection
+  </a>
+</div>
+
   </div>
 
   <h1>OUR PRODUCTS</h1>
