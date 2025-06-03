@@ -26,157 +26,77 @@
       font-weight: bold;
     }
 
-.hero-slider {
-  position: relative;
-  width: 100%;
-  max-height: 60vh;
-  overflow: hidden;
-}
-
-
-.slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: auto;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  z-index: 0;
-}
-
-.slide.active {
-  opacity: 1;
-  z-index: 1;
-}
-
-.overlay {
-  position: absolute;
-  top: 50%;
-  left: 10%;
-  transform: translateY(-50%);
-  color: white;
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 20px;
-  border-radius: 10px;
-  opacity: 0;
-  transform: translateX(-50px);
-  animation: slideIn 1s ease-out forwards;
-  animation-delay: 0.5s;
-}
-
-@keyframes slideIn {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-    .overlay h2 {
-      font-size: 28px;
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
     }
 
- .overlay button,
-.overlay a {
-  transition: transform 0.3s ease, background-color 0.3s;
-}
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 0;
+    }
 
-.overlay button:hover {
-  transform: scale(1.05);
-  background-color: #ffefef;
-}
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
 
-
-    .overlay a {
-      text-decoration: none;
-      color: black;
+    .overlay {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #ef7af7;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 22px;
+      font-weight: bold;
     }
 
     h1 {
       text-align: center;
       font-size: 36px;
-      margin: 30px 0 10px;
+      margin: 40px 0 20px;
     }
 
-  .product-list {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* ✅ 5 columns on desktop */
-  gap: 24px;
-  padding: 30px;
-  max-width: 1200px;
-  margin: auto;
-}
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 24px;
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
 
-@media screen and (max-width: 1024px) {
-  .product-list {
-    grid-template-columns: repeat(3, 1fr); /* ✅ 3 columns on tablets */
-  }
-}
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      padding: 16px;
+      transition: transform 0.2s;
+    }
 
-@media screen and (max-width: 600px) {
-  .product-list {
-    grid-template-columns: repeat(2, 1fr); /* ✅ 2 columns on phones */
-    gap: 16px;
-    padding: 20px;
-  }
-}
+    .product-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
 
-
-   .product-list {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 24px;
-  padding: 30px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.product-card {
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  padding: 16px;
-  transition: transform 0.2s;
-}
-
-.product-card img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-/* Tablet view - 3 columns */
-@media screen and (max-width: 1024px) {
-  .product-list {
-    grid-template-columns: repeat(3, 1fr);
-    padding: 20px;
-    gap: 20px;
-  }
-}
-
-/* Mobile view - 2 larger cards */
-@media screen and (max-width: 600px) {
-  .product-list {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 16px;
-    gap: 16px;
-  }
-
-  .product-card {
-    padding: 12px;
-  }
-
-  .product-card img {
-    height: 150px;
-    object-fit: cover;
-  }
-}
-.product-card:hover {
-  transform: scale(1.03);
-}
-
+    .product-card:hover {
+      transform: scale(1.03);
+    }
 
     .product-card h3 {
       font-size: 16px;
@@ -189,42 +109,36 @@
       margin-bottom: 15px;
     }
 
-    @media screen and (max-width: 768px) {
-      .overlay {
-        padding: 14px;
-        font-size: 16px;
-        left: 5%;
-        width: 90%;
-      }
-
-      .overlay h2 {
-        font-size: 20px;
-      }
-
-      .hero-slider {
-        max-height: 60vh;
-      }
-
+    @media screen and (max-width: 1024px) {
       .product-list {
+        grid-template-columns: repeat(3, 1fr);
         padding: 20px;
         gap: 20px;
       }
+    }
+
+    @media screen and (max-width: 600px) {
+      .product-list {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 16px;
+        gap: 16px;
+      }
+
+      .product-card {
+        padding: 12px;
+      }
 
       .product-card img {
-        height: 140px;
+        height: 150px;
+        object-fit: cover;
+      }
+
+      .overlay {
+        font-size: 18px;
+        padding: 10px 20px;
+        bottom: 10px;
       }
     }
-    .fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
   </style>
 </head>
 <body>
@@ -232,38 +146,12 @@
   <div class="top-bar">AnushaEpicEats</div>
 
   <div class="hero-slider">
-    <img src="slide 1.jpg" class="slide active" alt="Slide 1">
-    <img src="slide 2.jpg" class="slide" alt="Slide 2">
-    <img src="slide 4.jpg" class="slide" alt="Slide 3">
+    <img src="slide1.jpg" class="slide active" alt="Slide 1">
+    <img src="slide2.jpg" class="slide" alt="Slide 2">
+    <img src="slide3.jpg" class="slide" alt="Slide 3">
+    <img src="slide4.jpg" class="slide" alt="Slide 4">
 
-    <div class="overlay">
-      <h2>Made With Love</h2>
-      <button><a href="#">Shop Collection</a></button>
-    </div>
-    <div style="
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #1a1a1a;
-  color: white;
-  text-align: center;
-  padding: 24px 12px;">
-  <p style="text-transform: uppercase; letter-spacing: 1px; font-size: 14px; margin: 0;">Top Collections</p>
-  <h2 style="font-size: 28px; margin: 8px 0;">Limited Edition</h2>
-  <a href="#collections" style="
-    display: inline-block;
-    background: white;
-    color: black;
-    padding: 10px 24px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 500;
-    margin-top: 10px;">
-    Shop Collection
-  </a>
-</div>
-
+    <div class="overlay">Made With Love 💖</div>
   </div>
 
   <h1>OUR PRODUCTS</h1>
@@ -289,7 +177,7 @@
 
     <a class="product-card" href="product.html?name=cookies">
       <img src="photos/cookies1.jpeg" alt="Cookies">
-      <h3>finger Cookies/kg</h3>
+      <h3>Finger Cookies/kg</h3>
       <p>Rs 700</p>
     </a>
 
@@ -352,17 +240,18 @@
       <h3>Thandai Powder</h3>
       <p>Rs 190</p>
     </a>
-     <a class="product-card" href="product.html?name=cupcakes">
-      <img src="photos\donut1.webp" alt="Cupcakes">
+
+    <a class="product-card" href="product.html?name=donut">
+      <img src="photos/donut1.webp" alt="Donut">
       <h3>Donut</h3>
       <p>Rs 60</p>
     </a>
-    <a class="product-card" href="product.html?name=cupcakes">
-      <img src="drycake.jpg" alt="Cupcakes">
-      <h3>DryCake</h3>
+
+    <a class="product-card" href="product.html?name=drycake">
+      <img src="drycake.jpg" alt="Dry Cake">
+      <h3>Dry Cake</h3>
       <p>Rs 150</p>
     </a>
-  </div>
   </div>
 
   <script>
@@ -373,24 +262,7 @@
       slides[currentSlide].classList.remove('active');
       currentSlide = (currentSlide + 1) % slides.length;
       slides[currentSlide].classList.add('active');
-      
     }, 3000);
-  const cards = document.querySelectorAll('.product-card');
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  cards.forEach(card => {
-    card.classList.add('fade-in');
-    observer.observe(card);
-  });
-
-
   </script>
 
 </body>
