@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AnushaEpicEats - Bakery with Search</title>
+  <title>AnushaEpicEats - Responsive Bakery Carousel</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -38,82 +38,13 @@
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       font-family: 'Brush Script MT', cursive;
       letter-spacing: 2px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
     }
 
-    .bakery-name {
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .search-container {
-      position: relative;
-      margin-right: 20px;
-      transition: all 0.3s ease;
-    }
-
-    .search-box {
-      display: flex;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 50px;
-      padding: 8px 15px;
-      transition: all 0.3s ease;
-      width: 250px;
-    }
-
-    .search-box.expanded {
-      background: rgba(255, 255, 255, 0.9);
-    }
-
-    #searchInput {
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 16px;
-      padding: 5px 10px;
-      width: 100%;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    .search-box.expanded #searchInput {
-      color: #333;
-    }
-
-    #searchInput::placeholder {
-      color: rgba(255, 255, 255, 0.8);
-    }
-
-    .search-box.expanded #searchInput::placeholder {
-      color: #aaa;
-    }
-
-    .search-btn {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-      padding: 5px;
-    }
-
-    .search-results-count {
-      position: absolute;
-      bottom: -25px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      font-size: 14px;
-      color: white;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 10px;
-      padding: 3px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+    @media (max-width: 600px) {
+      .top-bar {
+        font-size: 24px;
+        padding: 14px;
+      }
     }
 
     .hero-slider {
@@ -125,6 +56,18 @@
       background-position: center;
       background-size: cover;
       margin-bottom: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-slider {
+        height: 50vh;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-slider {
+        height: 40vh;
+      }
     }
 
     .slide {
@@ -158,12 +101,30 @@
       text-shadow: 1px 1px 2px rgba(239, 122, 247, 0.6);
       animation: pulse 2s infinite;
       font-family: 'Dancing Script', cursive;
+      text-align: center;
     }
 
     @keyframes pulse {
       0% { transform: translateX(-50%) scale(1); }
       50% { transform: translateX(-50%) scale(1.05); }
       100% { transform: translateX(-50%) scale(1); }
+    }
+
+    @media (max-width: 900px) {
+      .overlay {
+        font-size: 22px;
+        padding: 12px 24px;
+        width: 90%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .overlay {
+        font-size: 18px;
+        padding: 10px 20px;
+        width: 90%;
+        bottom: 5%;
+      }
     }
 
     h1 {
@@ -189,6 +150,26 @@
       border-radius: 2px;
     }
 
+    @media (max-width: 900px) {
+      h1 {
+        font-size: 36px;
+        margin: 25px 0 15px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 28px;
+        margin: 20px 0 10px;
+      }
+      
+      h1:after {
+        width: 60px;
+        height: 3px;
+        bottom: -8px;
+      }
+    }
+
     /* 3D Carousel Styles */
     .carousel-wrapper {
       position: relative;
@@ -198,6 +179,20 @@
       margin: 40px auto;
       perspective: 2000px;
       overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      .carousel-wrapper {
+        height: 400px;
+        perspective: 1500px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .carousel-wrapper {
+        height: 350px;
+        perspective: 1000px;
+      }
     }
 
     .carousel-container {
@@ -230,6 +225,20 @@
       transform: translateX(-50%);
     }
 
+    @media (max-width: 900px) {
+      .product-card {
+        width: 260px;
+        height: 360px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .product-card {
+        width: 280px;
+        height: 380px;
+      }
+    }
+
     .product-card img {
       width: 100%;
       height: 240px;
@@ -244,6 +253,18 @@
       transform: translateZ(50px) scale(1.05);
     }
 
+    @media (max-width: 900px) {
+      .product-card img {
+        height: 180px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .product-card img {
+        height: 200px;
+      }
+    }
+
     .product-card h3 {
       font-size: 22px;
       margin: 15px 0 8px;
@@ -251,11 +272,24 @@
       transform: translateZ(20px);
     }
 
+    @media (max-width: 600px) {
+      .product-card h3 {
+        font-size: 20px;
+        margin: 12px 0 6px;
+      }
+    }
+
     .product-card p {
       font-size: 20px;
       color: #ef7af7;
       font-weight: bold;
       transform: translateZ(20px);
+    }
+
+    @media (max-width: 600px) {
+      .product-card p {
+        font-size: 18px;
+      }
     }
 
     .product-card.center {
@@ -290,6 +324,41 @@
       opacity: 0;
       z-index: 1;
       pointer-events: none;
+    }
+
+    /* Mobile-specific carousel positioning */
+    @media (max-width: 768px) {
+      .product-card.left {
+        transform: translateX(-120%) translateZ(50px) rotateY(20deg);
+      }
+      
+      .product-card.right {
+        transform: translateX(20%) translateZ(50px) rotateY(-20deg);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .product-card.left,
+      .product-card.right {
+        transform: translateX(-50%) translateZ(0) rotateY(0);
+        opacity: 0;
+        pointer-events: none;
+      }
+      
+      .product-card.center {
+        transform: translateX(-50%) translateZ(0);
+        border: 4px dashed #ef7af7;
+        box-shadow: 0 15px 35px rgba(239, 122, 247, 0.4);
+        z-index: 10;
+        animation: none;
+      }
+      
+      .product-card.center .product-info {
+        background: linear-gradient(to right, #ffefef, #fff0f9);
+        padding: 12px;
+        border-radius: 15px;
+        transform: none;
+      }
     }
 
     .product-info {
@@ -343,11 +412,35 @@
       transform: none;
     }
 
+    @media (max-width: 900px) {
+      .carousel-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .carousel-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 20px;
+        margin: 0 10px;
+      }
+      
+      .carousel-nav {
+        margin-top: 30px;
+        gap: 10px;
+      }
+    }
+
     .carousel-dots {
       display: flex;
       justify-content: center;
       margin-top: 30px;
       gap: 15px;
+      flex-wrap: wrap;
+      max-width: 90%;
     }
 
     .dot {
@@ -366,6 +459,18 @@
       box-shadow: 0 0 10px rgba(239, 122, 247, 0.8);
     }
 
+    @media (max-width: 600px) {
+      .carousel-dots {
+        gap: 10px;
+        margin-top: 20px;
+      }
+      
+      .dot {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
     .footer {
       margin-top: 60px;
       text-align: center;
@@ -375,6 +480,14 @@
       background: rgba(255, 255, 255, 0.7);
       width: 100%;
       border-top: 2px dashed #ef7af7;
+    }
+
+    @media (max-width: 600px) {
+      .footer {
+        margin-top: 40px;
+        padding: 20px;
+        font-size: 16px;
+      }
     }
 
     .social-icons {
@@ -404,6 +517,19 @@
       box-shadow: 0 8px 15px rgba(239, 122, 247, 0.6);
     }
 
+    @media (max-width: 600px) {
+      .social-icons {
+        gap: 15px;
+        margin-top: 15px;
+      }
+      
+      .social-icons a {
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+      }
+    }
+
     /* Animation for product cards */
     @keyframes float {
       0% { transform: translateX(-50%) translateY(0) translateZ(0); }
@@ -415,180 +541,33 @@
       animation: float 4s ease-in-out infinite;
     }
 
-    /* No results message */
-    .no-results {
-      text-align: center;
-      padding: 40px;
-      font-size: 24px;
-      color: #ef7af7;
-      display: none;
-    }
-
-    /* Mobile search */
-    .mobile-search-btn {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 24px;
-      margin-right: 15px;
-      cursor: pointer;
-    }
-
-    .mobile-search-container {
-      display: none;
-      width: 100%;
-      padding: 15px;
-      background: linear-gradient(to right, #ff9b86, #ef7af7);
-    }
-
-    .mobile-search-box {
-      display: flex;
-      align-items: center;
-      background: white;
-      border-radius: 50px;
-      padding: 10px 15px;
-      width: 100%;
-    }
-
-    .mobile-search-box input {
-      flex: 1;
-      border: none;
-      padding: 8px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    .mobile-search-box button {
-      background: none;
-      border: none;
-      color: #ef7af7;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    /* Responsive design */
-    @media screen and (max-width: 900px) {
-      .carousel-wrapper {
-        height: 400px;
-      }
-      
-      .product-card {
-        width: 260px;
-        height: 360px;
-      }
-      
-      .product-card img {
-        height: 180px;
-      }
-      
-      .product-card.left {
-        transform: translateX(-130%) translateZ(50px) rotateY(20deg);
-      }
-      
-      .product-card.right {
-        transform: translateX(30%) translateZ(50px) rotateY(-20deg);
-      }
-      
-      .search-container {
-        display: none;
-      }
-      
-      .mobile-search-btn {
-        display: block;
+    @media (max-width: 600px) {
+      .product-card.center {
+        animation: none;
       }
     }
 
-    @media screen and (max-width: 600px) {
-      .hero-slider {
-        height: 40vh;
-      }
-
-      .overlay {
-        font-size: 18px;
-        padding: 10px 20px;
-        width: 90%;
-        text-align: center;
-      }
-      
-      h1 {
-        font-size: 32px;
-      }
-      
-      .carousel-wrapper {
-        height: 350px;
-        perspective: 1200px;
-      }
-      
-      .product-card {
-        width: 220px;
-        height: 320px;
-      }
-      
-      .product-card img {
-        height: 150px;
-      }
-      
-      .carousel-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-      }
-      
-      .product-card.left {
-        transform: translateX(-120%) translateZ(50px) rotateY(20deg);
-      }
-      
-      .product-card.right {
-        transform: translateX(20%) translateZ(50px) rotateY(-20deg);
-      }
+    /* Mobile Navigation Swipe Support */
+    .carousel-container {
+      touch-action: pan-y;
     }
   </style>
 </head>
 <body>
 
-  <div class="top-bar">
-    <div class="bakery-name">AnushaEpicEats</div>
-    
-    <div class="search-container">
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search products...">
-        <button class="search-btn" id="searchButton"><i class="fas fa-search"></i></button>
-      </div>
-      <div class="search-results-count" id="resultsCount"></div>
-    </div>
-    
-    <button class="mobile-search-btn" id="mobileSearchBtn">
-      <i class="fas fa-search"></i>
-    </button>
-  </div>
-  
-  <div class="mobile-search-container" id="mobileSearchContainer">
-    <div class="mobile-search-box">
-      <input type="text" id="mobileSearchInput" placeholder="Search products...">
-      <button id="closeMobileSearch"><i class="fas fa-times"></i></button>
-    </div>
-  </div>
-
-  <div class="hero-slider">
-    <img src="https://images.unsplash.com/photo-1565958011703-72f8583c477b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="slide active" alt="Delicious Desserts">
-    <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80" class="slide" alt="Colorful Cupcakes">
+  <div class="top-bar">AnushaEpicEats</div>
+<div class="hero-slider">
+    <img src="slide 1.jpg" class="slide active" alt="Delicious Desserts">
+    <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?xlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80" class="slide" alt="Colorful Cupcakes">
     <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="slide" alt="Assorted Pastries">
-    <div class="overlay">Made With Love & Passion 💖</div>
+    <div class="overlay">Made With Love 💖</div>
   </div>
-
   <h1>OUR PRODUCTS</h1>
   
   <div class="carousel-wrapper">
     <div class="carousel-container" id="carouselContainer">
       <!-- Product cards will be generated dynamically -->
     </div>
-  </div>
-  
-  <div class="no-results" id="noResults">
-    <i class="fas fa-search" style="font-size: 48px; margin-bottom: 20px;"></i>
-    <h2>No products found</h2>
-    <p>Try adjusting your search terms</p>
   </div>
   
   <div class="carousel-nav">
@@ -612,7 +591,8 @@
   </div>
 
   <script>
-     // Sample product data
+    // Sample product data
+    // Sample product data
     const products = [
       {
         name: "biscoff",
@@ -712,7 +692,6 @@
         image: "photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg"
    } ];
 
-
     // Hero Slider
     const slides = document.querySelectorAll('.slide');
     let currentSlide = 0;
@@ -727,17 +706,14 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const carouselDots = document.getElementById('carouselDots');
-    const noResults = document.getElementById('noResults');
-    const resultsCount = document.getElementById('resultsCount');
     
     let currentIndex = 0;
-    let filteredProducts = [...products];
     
     // Generate product cards
     function generateProductCards() {
       carouselContainer.innerHTML = '';
       
-      filteredProducts.forEach((product, index) => {
+      products.forEach((product, index) => {
         const card = document.createElement('a');
         card.className = 'product-card';
         card.href = `product.html?name=${product.name}`;
@@ -751,31 +727,15 @@
         carouselContainer.appendChild(card);
       });
       
-      // Show/hide no results message
-      if (filteredProducts.length === 0) {
-        noResults.style.display = 'block';
-        document.querySelector('.carousel-nav').style.display = 'none';
-        document.querySelector('.carousel-dots').style.display = 'none';
-      } else {
-        noResults.style.display = 'none';
-        document.querySelector('.carousel-nav').style.display = 'flex';
-        document.querySelector('.carousel-dots').style.display = 'flex';
-      }
-      
       // Initialize positions
       updateCarousel();
-      
-      // Update results count
-      resultsCount.textContent = `${filteredProducts.length} product${filteredProducts.length !== 1 ? 's' : ''} found`;
-      resultsCount.style.opacity = '1';
-      setTimeout(() => { resultsCount.style.opacity = '0'; }, 2000);
     }
     
     // Generate dots for navigation
     function generateDots() {
       carouselDots.innerHTML = '';
       
-      for (let i = 0; i < filteredProducts.length; i++) {
+      for (let i = 0; i < products.length; i++) {
         const dot = document.createElement('div');
         dot.className = 'dot';
         if (i === 0) dot.classList.add('active');
@@ -817,12 +777,12 @@
       
       // Update button states
       prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex === filteredProducts.length - 1;
+      nextBtn.disabled = currentIndex === products.length - 1;
     }
     
     // Next product
     function nextProduct() {
-      if (currentIndex < filteredProducts.length - 1) {
+      if (currentIndex < products.length - 1) {
         currentIndex++;
         updateCarousel();
       }
@@ -836,26 +796,6 @@
       }
     }
     
-    // Search functionality
-    function filterProducts(searchTerm) {
-      if (!searchTerm) {
-        return [...products];
-      }
-      
-      const term = searchTerm.toLowerCase();
-      return products.filter(product => 
-        product.title.toLowerCase().includes(term) || 
-        product.name.toLowerCase().includes(term)
-      );
-    }
-    
-    function handleSearch(searchTerm) {
-      filteredProducts = filterProducts(searchTerm);
-      currentIndex = 0;
-      generateProductCards();
-      generateDots();
-    }
-    
     // Initialize carousel
     function initCarousel() {
       generateProductCards();
@@ -865,44 +805,32 @@
       prevBtn.addEventListener('click', prevProduct);
       nextBtn.addEventListener('click', nextProduct);
       
-      // Search input event listeners
-      const searchInput = document.getElementById('searchInput');
-      const mobileSearchInput = document.getElementById('mobileSearchInput');
-      const searchButton = document.getElementById('searchButton');
-      const mobileSearchBtn = document.getElementById('mobileSearchBtn');
-      const closeMobileSearch = document.getElementById('closeMobileSearch');
-      const mobileSearchContainer = document.getElementById('mobileSearchContainer');
-      const searchBox = document.querySelector('.search-box');
+      // Add swipe support for mobile
+      let touchStartX = 0;
+      let touchEndX = 0;
       
-      // Desktop search
-      searchInput.addEventListener('input', function() {
-        if (this.value) {
-          searchBox.classList.add('expanded');
-        } else {
-          searchBox.classList.remove('expanded');
+      carouselContainer.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      });
+      
+      carouselContainer.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      });
+      
+      function handleSwipe() {
+        const swipeThreshold = 50; // Minimum swipe distance to trigger
+        
+        if (touchStartX - touchEndX > swipeThreshold) {
+          // Swipe left - next product
+          nextProduct();
         }
-        handleSearch(this.value);
-      });
-      
-      searchButton.addEventListener('click', function() {
-        handleSearch(searchInput.value);
-      });
-      
-      // Mobile search
-      mobileSearchBtn.addEventListener('click', function() {
-        mobileSearchContainer.style.display = 'block';
-        setTimeout(() => {
-          mobileSearchInput.focus();
-        }, 100);
-      });
-      
-      closeMobileSearch.addEventListener('click', function() {
-        mobileSearchContainer.style.display = 'none';
-      });
-      
-      mobileSearchInput.addEventListener('input', function() {
-        handleSearch(this.value);
-      });
+        
+        if (touchEndX - touchStartX > swipeThreshold) {
+          // Swipe right - previous product
+          prevProduct();
+        }
+      }
     }
     
     // Initialize on load
