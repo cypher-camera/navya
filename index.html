@@ -3,20 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AnushaEpicEats - Bakery Paradise</title>
+  <title>AnushaEpicEats - Bakery with Search</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Custom Variables */
-    :root {
-      --primary: #ff9b86;
-      --secondary: #ef7af7;
-      --accent: #ffd166;
-      --light: #fffdf5;
-      --dark: #3a2e39;
-      --shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-    }
-
-    /* Base Styles */
     * {
       margin: 0;
       padding: 0;
@@ -26,34 +15,18 @@
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #fff9e6 0%, #fff0f8 100%);
-      color: var(--dark);
+      color: #333;
       overflow-x: hidden;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      perspective: 1000px;
     }
 
-    /* Floating Elements */
-    .floating-element {
-      position: absolute;
-      z-index: -1;
-      animation: float 8s infinite ease-in-out;
-      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      25% { transform: translate(-10px, -20px) rotate(5deg); }
-      50% { transform: translate(10px, 10px) rotate(-5deg); }
-      75% { transform: translate(-5px, -15px) rotate(2deg); }
-    }
-
-    /* Top Bar with 3D Effect */
     .top-bar {
-      background: linear-gradient(to right, var(--primary), var(--secondary));
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
       padding: 18px;
+      text-align: center;
       color: white;
       font-size: 32px;
       font-weight: bold;
@@ -61,7 +34,7 @@
       top: 0;
       z-index: 100;
       width: 100%;
-      box-shadow: var(--shadow);
+      box-shadow: 0 4px 20px rgba(239, 122, 247, 0.4);
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       font-family: 'Brush Script MT', cursive;
       letter-spacing: 2px;
@@ -69,27 +42,17 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      transform: translateZ(20px);
     }
 
     .bakery-name {
       flex: 1;
       min-width: 200px;
-      text-align: center;
-      transform: translateZ(30px);
-      transition: all 0.3s ease;
-    }
-
-    .bakery-name:hover {
-      transform: translateZ(30px) scale(1.05);
-      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
     }
 
     .search-container {
       position: relative;
       margin-right: 20px;
       transition: all 0.3s ease;
-      transform: translateZ(30px);
     }
 
     .search-box {
@@ -100,13 +63,10 @@
       padding: 8px 15px;
       transition: all 0.3s ease;
       width: 250px;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
     }
 
     .search-box.expanded {
       background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 8px 20px rgba(239, 122, 247, 0.3);
     }
 
     #searchInput {
@@ -121,7 +81,7 @@
     }
 
     .search-box.expanded #searchInput {
-      color: var(--dark);
+      color: #333;
     }
 
     #searchInput::placeholder {
@@ -139,21 +99,32 @@
       font-size: 20px;
       cursor: pointer;
       padding: 5px;
-      transition: all 0.3s ease;
     }
 
-    .search-btn:hover {
-      transform: scale(1.2);
+    .search-results-count {
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 3px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    /* Hero Slider with Parallax */
     .hero-slider {
       position: relative;
       width: 100%;
       height: 65vh;
       overflow: hidden;
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
       margin-bottom: 40px;
-      transform-style: preserve-3d;
     }
 
     .slide {
@@ -162,13 +133,13 @@
       height: 100%;
       object-fit: cover;
       opacity: 0;
-      transform: scale(1.1) translateZ(-50px);
+      transform: scale(1.1);
       transition: opacity 1s ease-in-out, transform 1s ease-in-out;
     }
 
     .slide.active {
       opacity: 1;
-      transform: scale(1) translateZ(0);
+      transform: scale(1);
       z-index: 1;
     }
 
@@ -176,9 +147,9 @@
       position: absolute;
       bottom: 8%;
       left: 50%;
-      transform: translateX(-50%) translateZ(50px);
+      transform: translateX(-50%);
       background-color: rgba(255, 255, 255, 0.85);
-      color: var(--secondary);
+      color: #ef7af7;
       padding: 14px 32px;
       border-radius: 40px;
       font-size: 26px;
@@ -187,32 +158,23 @@
       text-shadow: 1px 1px 2px rgba(239, 122, 247, 0.6);
       animation: pulse 2s infinite;
       font-family: 'Dancing Script', cursive;
-      transition: all 0.5s ease;
-      z-index: 10;
-    }
-
-    .overlay:hover {
-      transform: translateX(-50%) translateZ(50px) scale(1.1);
-      box-shadow: 0 12px 30px rgba(239, 122, 247, 0.7);
     }
 
     @keyframes pulse {
-      0% { transform: translateX(-50%) translateZ(50px) scale(1); }
-      50% { transform: translateX(-50%) translateZ(50px) scale(1.05); }
-      100% { transform: translateX(-50%) translateZ(50px) scale(1); }
+      0% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
+      100% { transform: translateX(-50%) scale(1); }
     }
 
-    /* Section Title */
     h1 {
       text-align: center;
       font-size: 42px;
       margin: 30px 0 20px;
-      color: var(--secondary);
+      color: #ef7af7;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
       position: relative;
       display: inline-block;
       padding: 0 20px;
-      transform: translateZ(30px);
     }
 
     h1:after {
@@ -223,11 +185,11 @@
       transform: translateX(-50%);
       width: 80px;
       height: 4px;
-      background: linear-gradient(to right, var(--primary), var(--secondary));
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
       border-radius: 2px;
     }
 
-    /* 3D Carousel */
+    /* 3D Carousel Styles */
     .carousel-wrapper {
       position: relative;
       max-width: 1200px;
@@ -235,8 +197,7 @@
       height: 500px;
       margin: 40px auto;
       perspective: 2000px;
-      overflow: visible;
-      transform-style: preserve-3d;
+      overflow: hidden;
     }
 
     .carousel-container {
@@ -256,7 +217,7 @@
       overflow: hidden;
       text-align: center;
       padding: 20px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
       transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       cursor: pointer;
       transform-style: preserve-3d;
@@ -281,28 +242,24 @@
 
     .product-card.center img {
       transform: translateZ(50px) scale(1.05);
-      border: 3px solid white;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     }
 
     .product-card h3 {
       font-size: 22px;
       margin: 15px 0 8px;
-      color: var(--dark);
+      color: #333;
       transform: translateZ(20px);
-      transition: all 0.3s ease;
     }
 
     .product-card p {
       font-size: 20px;
-      color: var(--secondary);
+      color: #ef7af7;
       font-weight: bold;
       transform: translateZ(20px);
-      transition: all 0.3s ease;
     }
 
     .product-card.center {
-      border: 4px dashed var(--secondary);
+      border: 4px dashed #ef7af7;
       box-shadow: 0 25px 50px rgba(239, 122, 247, 0.4);
       z-index: 10;
       transform: translateX(-50%) translateZ(100px);
@@ -313,7 +270,6 @@
       padding: 12px;
       border-radius: 15px;
       transform: translateZ(30px);
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
     }
 
     .product-card.left {
@@ -341,30 +297,22 @@
       border-radius: 12px;
       padding: 10px;
       transition: all 0.4s ease;
-      transform-style: preserve-3d;
     }
 
     .product-card:hover .product-info {
       background: linear-gradient(to right, #ffefef, #fff0f9);
       transform: translateY(-5px) translateZ(10px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
 
-    .product-card:hover h3, .product-card:hover p {
-      transform: translateZ(30px) scale(1.05);
-    }
-
-    /* Carousel Navigation */
     .carousel-nav {
       display: flex;
       justify-content: center;
       margin-top: 40px;
       gap: 20px;
-      transform: translateZ(30px);
     }
 
     .carousel-btn {
-      background: linear-gradient(to right, var(--primary), var(--secondary));
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
       border: none;
       color: white;
       font-size: 24px;
@@ -378,23 +326,6 @@
       box-shadow: 0 8px 20px rgba(239, 122, 247, 0.5);
       transition: all 0.3s ease;
       transform: translateZ(0);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .carousel-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: 0.5s;
-    }
-
-    .carousel-btn:hover::before {
-      left: 100%;
     }
 
     .carousel-btn:hover {
@@ -417,7 +348,6 @@
       justify-content: center;
       margin-top: 30px;
       gap: 15px;
-      transform: translateZ(30px);
     }
 
     .dot {
@@ -431,23 +361,20 @@
     }
 
     .dot.active {
-      background: var(--secondary);
+      background: #ef7af7;
       transform: scale(1.4);
       box-shadow: 0 0 10px rgba(239, 122, 247, 0.8);
     }
 
-    /* Footer */
     .footer {
       margin-top: 60px;
       text-align: center;
       padding: 30px;
-      color: var(--secondary);
+      color: #ef7af7;
       font-size: 18px;
       background: rgba(255, 255, 255, 0.7);
       width: 100%;
-      border-top: 2px dashed var(--secondary);
-      backdrop-filter: blur(5px);
-      transform: translateZ(20px);
+      border-top: 2px dashed #ef7af7;
     }
 
     .social-icons {
@@ -455,7 +382,6 @@
       justify-content: center;
       gap: 20px;
       margin-top: 20px;
-      transform: translateZ(30px);
     }
 
     .social-icons a {
@@ -464,14 +390,13 @@
       justify-content: center;
       width: 50px;
       height: 50px;
-      background: linear-gradient(to right, var(--primary), var(--secondary));
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
       border-radius: 50%;
       color: white;
       font-size: 24px;
       text-decoration: none;
       transition: all 0.3s ease;
       transform: translateZ(0);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .social-icons a:hover {
@@ -481,9 +406,9 @@
 
     /* Animation for product cards */
     @keyframes float {
-      0% { transform: translateX(-50%) translateY(0) translateZ(100px); }
-      50% { transform: translateX(-50%) translateY(-15px) translateZ(110px); }
-      100% { transform: translateX(-50%) translateY(0) translateZ(100px); }
+      0% { transform: translateX(-50%) translateY(0) translateZ(0); }
+      50% { transform: translateX(-50%) translateY(-15px) translateZ(10px); }
+      100% { transform: translateX(-50%) translateY(0) translateZ(0); }
     }
 
     .product-card.center {
@@ -495,9 +420,8 @@
       text-align: center;
       padding: 40px;
       font-size: 24px;
-      color: var(--secondary);
+      color: #ef7af7;
       display: none;
-      transform: translateZ(30px);
     }
 
     /* Mobile search */
@@ -509,19 +433,13 @@
       font-size: 24px;
       margin-right: 15px;
       cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .mobile-search-btn:hover {
-      transform: scale(1.2);
     }
 
     .mobile-search-container {
       display: none;
       width: 100%;
       padding: 15px;
-      background: linear-gradient(to right, var(--primary), var(--secondary));
-      transform: translateZ(30px);
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
     }
 
     .mobile-search-box {
@@ -531,7 +449,6 @@
       border-radius: 50px;
       padding: 10px 15px;
       width: 100%;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     .mobile-search-box input {
@@ -545,14 +462,9 @@
     .mobile-search-box button {
       background: none;
       border: none;
-      color: var(--secondary);
+      color: #ef7af7;
       font-size: 20px;
       cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .mobile-search-box button:hover {
-      transform: scale(1.2);
     }
 
     /* Responsive design */
@@ -635,8 +547,6 @@
 </head>
 <body>
 
-  <!-- Floating decorative elements -->
-  
   <div class="top-bar">
     <div class="bakery-name">AnushaEpicEats</div>
     
@@ -645,6 +555,7 @@
         <input type="text" id="searchInput" placeholder="Search products...">
         <button class="search-btn" id="searchButton"><i class="fas fa-search"></i></button>
       </div>
+      <div class="search-results-count" id="resultsCount"></div>
     </div>
     
     <button class="mobile-search-btn" id="mobileSearchBtn">
@@ -659,15 +570,13 @@
     </div>
   </div>
 
-  <!-- Hero Slider -->
-  <div class="hero-slider">
-    <img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" class="slide active" alt="Delicious Desserts">
-    <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80" class="slide" alt="Colorful Cupcakes">
+<div class="hero-slider">
+    <img src="slide 1.jpg" class="slide active" alt="Delicious Desserts">
+    <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?xlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80" class="slide" alt="Colorful Cupcakes">
     <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="slide" alt="Assorted Pastries">
     <div class="overlay">Made With Love 💖</div>
   </div>
-  
-  <h1>OUR DELICIOUS PRODUCTS</h1>
+  <h1>OUR PRODUCTS</h1>
   
   <div class="carousel-wrapper">
     <div class="carousel-container" id="carouselContainer">
@@ -696,14 +605,14 @@
       <a href="#"><i class="fab fa-instagram"></i></a>
       <a href="#"><i class="fab fa-facebook"></i></a>
       <a href="#"><i class="fab fa-whatsapp"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
     </div>
     <p style="margin-top: 20px;">© 2023 AnushaEpicEats. All rights reserved.</p>
   </div>
 
   <script>
     // Sample product data
-   // Sample product data
+    // Sample product data
     const products = [
       {
         name: "biscoff",
@@ -803,215 +712,200 @@
         image: "photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg"
    } ];
 
+    // Hero Slider
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+    setInterval(() => {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }, 4000);
 
-    // Initialize everything after DOM is loaded
-    window.addEventListener('DOMContentLoaded', function() {
-      // Hero Slider
-      const slides = document.querySelectorAll('.slide');
-      let currentSlide = 0;
+    // Carousel functionality
+    const carouselContainer = document.getElementById('carouselContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const carouselDots = document.getElementById('carouselDots');
+    const noResults = document.getElementById('noResults');
+    const resultsCount = document.getElementById('resultsCount');
+    
+    let currentIndex = 0;
+    let filteredProducts = [...products];
+    
+    // Generate product cards
+    function generateProductCards() {
+      carouselContainer.innerHTML = '';
       
-      if (slides.length > 0) {
-        setInterval(() => {
-          slides[currentSlide].classList.remove('active');
-          currentSlide = (currentSlide + 1) % slides.length;
-          slides[currentSlide].classList.add('active');
-        }, 4000);
-      }
-
-      // Carousel functionality
-      const carouselContainer = document.getElementById('carouselContainer');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      const carouselDots = document.getElementById('carouselDots');
-      const noResults = document.getElementById('noResults');
+      filteredProducts.forEach((product, index) => {
+        const card = document.createElement('a');
+        card.className = 'product-card';
+        card.href = `product.html?name=${product.name}`;
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.title}">
+          <div class="product-info">
+            <h3>${product.title}</h3>
+            <p>${product.price}</p>
+          </div>
+        `;
+        carouselContainer.appendChild(card);
+      });
       
-      // Only initialize if elements exist
-      if (carouselContainer && prevBtn && nextBtn && carouselDots && noResults) {
-        initCarousel();
+      // Show/hide no results message
+      if (filteredProducts.length === 0) {
+        noResults.style.display = 'block';
+        document.querySelector('.carousel-nav').style.display = 'none';
+        document.querySelector('.carousel-dots').style.display = 'none';
+      } else {
+        noResults.style.display = 'none';
+        document.querySelector('.carousel-nav').style.display = 'flex';
+        document.querySelector('.carousel-dots').style.display = 'flex';
       }
-
-      // Initialize carousel
-      function initCarousel() {
-        let currentIndex = 0;
-        let filteredProducts = [...products];
-        
-        // Generate product cards
-        function generateProductCards() {
-          carouselContainer.innerHTML = '';
-          
-          filteredProducts.forEach((product, index) => {
-            const card = document.createElement('a');
-            card.className = 'product-card';
-            card.href = `product.html?name=${product.name}`;
-            card.innerHTML = `
-              <img src="${product.image}" alt="${product.title}">
-              <div class="product-info">
-                <h3>${product.title}</h3>
-                <p>${product.price}</p>
-              </div>
-            `;
-            carouselContainer.appendChild(card);
-          });
-          
-          // Initialize positions
+      
+      // Initialize positions
+      updateCarousel();
+      
+      // Update results count
+      resultsCount.textContent = `${filteredProducts.length} product${filteredProducts.length !== 1 ? 's' : ''} found`;
+      resultsCount.style.opacity = '1';
+      setTimeout(() => { resultsCount.style.opacity = '0'; }, 2000);
+    }
+    
+    // Generate dots for navigation
+    function generateDots() {
+      carouselDots.innerHTML = '';
+      
+      for (let i = 0; i < filteredProducts.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => {
+          currentIndex = i;
           updateCarousel();
-        }
-        
-        // Generate dots for navigation
-        function generateDots() {
-          carouselDots.innerHTML = '';
-          
-          for (let i = 0; i < filteredProducts.length; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'dot';
-            if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-              currentIndex = i;
-              updateCarousel();
-            });
-            carouselDots.appendChild(dot);
-          }
-        }
-        
-        // Update carousel display
-        function updateCarousel() {
-          const cards = document.querySelectorAll('.product-card');
-          
-          // Show/hide no results message
-          if (filteredProducts.length === 0) {
-            noResults.style.display = 'block';
-            document.querySelector('.carousel-nav').style.display = 'none';
-            document.querySelector('.carousel-dots').style.display = 'none';
-            return;
-          } else {
-            noResults.style.display = 'none';
-            document.querySelector('.carousel-nav').style.display = 'flex';
-            document.querySelector('.carousel-dots').style.display = 'flex';
-          }
-          
-          // Remove all classes and reset positions
-          cards.forEach((card, index) => {
-            card.classList.remove('left', 'center', 'right', 'hidden');
-            card.style.display = 'block';
-          });
-          
-          // Position cards based on currentIndex
-          cards.forEach((card, index) => {
-            if (index === currentIndex) {
-              card.classList.add('center');
-            } else if (index === currentIndex - 1) {
-              card.classList.add('left');
-            } else if (index === currentIndex + 1) {
-              card.classList.add('right');
-            } else {
-              card.classList.add('hidden');
-            }
-          });
-          
-          // Update dots
-          document.querySelectorAll('.dot').forEach((dot, index) => {
-            dot.classList.toggle('active', index === currentIndex);
-          });
-          
-          // Update button states
-          prevBtn.disabled = currentIndex === 0;
-          nextBtn.disabled = currentIndex === filteredProducts.length - 1;
-        }
-        
-        // Next product
-        function nextProduct() {
-          if (currentIndex < filteredProducts.length - 1) {
-            currentIndex++;
-            updateCarousel();
-          }
-        }
-        
-        // Previous product
-        function prevProduct() {
-          if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
-          }
-        }
-        
-        // Search functionality
-        function filterProducts(searchTerm) {
-          if (!searchTerm) {
-            return [...products];
-          }
-          
-          const term = searchTerm.toLowerCase();
-          return products.filter(product => 
-            product.title.toLowerCase().includes(term) || 
-            product.name.toLowerCase().includes(term)
-          );
-        }
-        
-        function handleSearch(searchTerm) {
-          filteredProducts = filterProducts(searchTerm);
-          currentIndex = 0;
-          generateProductCards();
-          generateDots();
-        }
-        
-        // Initialize carousel
-        generateProductCards();
-        generateDots();
-        
-        // Add event listeners
-        prevBtn.addEventListener('click', prevProduct);
-        nextBtn.addEventListener('click', nextProduct);
-        
-        // Search input event listeners
-        const searchInput = document.getElementById('searchInput');
-        const mobileSearchInput = document.getElementById('mobileSearchInput');
-        const searchButton = document.getElementById('searchButton');
-        const mobileSearchBtn = document.getElementById('mobileSearchBtn');
-        const closeMobileSearch = document.getElementById('closeMobileSearch');
-        const mobileSearchContainer = document.getElementById('mobileSearchContainer');
-        const searchBox = document.querySelector('.search-box');
-        
-        // Desktop search
-        if (searchInput) {
-          searchInput.addEventListener('input', function() {
-            if (this.value) {
-              searchBox.classList.add('expanded');
-            } else {
-              searchBox.classList.remove('expanded');
-            }
-            handleSearch(this.value);
-          });
-        }
-        
-        if (searchButton) {
-          searchButton.addEventListener('click', function() {
-            handleSearch(searchInput.value);
-          });
-        }
-        
-        // Mobile search
-        if (mobileSearchBtn) {
-          mobileSearchBtn.addEventListener('click', function() {
-            mobileSearchContainer.style.display = 'block';
-            setTimeout(() => {
-              mobileSearchInput.focus();
-            }, 100);
-          });
-        }
-        
-        if (closeMobileSearch) {
-          closeMobileSearch.addEventListener('click', function() {
-            mobileSearchContainer.style.display = 'none';
-          });
-        }
-        
-        if (mobileSearchInput) {
-          mobileSearchInput.addEventListener('input', function() {
-            handleSearch(this.value);
-          });
-        }
+        });
+        carouselDots.appendChild(dot);
       }
-    });
+    }
+    
+    // Update carousel display
+    function updateCarousel() {
+      const cards = document.querySelectorAll('.product-card');
+      
+      // Remove all classes and reset positions
+      cards.forEach((card, index) => {
+        card.classList.remove('left', 'center', 'right', 'hidden');
+        card.style.display = 'block';
+      });
+      
+      // Position cards based on currentIndex
+      cards.forEach((card, index) => {
+        if (index === currentIndex) {
+          card.classList.add('center');
+        } else if (index === currentIndex - 1) {
+          card.classList.add('left');
+        } else if (index === currentIndex + 1) {
+          card.classList.add('right');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      
+      // Update dots
+      document.querySelectorAll('.dot').forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+      
+      // Update button states
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === filteredProducts.length - 1;
+    }
+    
+    // Next product
+    function nextProduct() {
+      if (currentIndex < filteredProducts.length - 1) {
+        currentIndex++;
+        updateCarousel();
+      }
+    }
+    
+    // Previous product
+    function prevProduct() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    }
+    
+    // Search functionality
+    function filterProducts(searchTerm) {
+      if (!searchTerm) {
+        return [...products];
+      }
+      
+      const term = searchTerm.toLowerCase();
+      return products.filter(product => 
+        product.title.toLowerCase().includes(term) || 
+        product.name.toLowerCase().includes(term)
+      );
+    }
+    
+    function handleSearch(searchTerm) {
+      filteredProducts = filterProducts(searchTerm);
+      currentIndex = 0;
+      generateProductCards();
+      generateDots();
+    }
+    
+    // Initialize carousel
+    function initCarousel() {
+      generateProductCards();
+      generateDots();
+      
+      // Add event listeners
+      prevBtn.addEventListener('click', prevProduct);
+      nextBtn.addEventListener('click', nextProduct);
+      
+      // Search input event listeners
+      const searchInput = document.getElementById('searchInput');
+      const mobileSearchInput = document.getElementById('mobileSearchInput');
+      const searchButton = document.getElementById('searchButton');
+      const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+      const closeMobileSearch = document.getElementById('closeMobileSearch');
+      const mobileSearchContainer = document.getElementById('mobileSearchContainer');
+      const searchBox = document.querySelector('.search-box');
+      
+      // Desktop search
+      searchInput.addEventListener('input', function() {
+        if (this.value) {
+          searchBox.classList.add('expanded');
+        } else {
+          searchBox.classList.remove('expanded');
+        }
+        handleSearch(this.value);
+      });
+      
+      searchButton.addEventListener('click', function() {
+        handleSearch(searchInput.value);
+      });
+      
+      // Mobile search
+      mobileSearchBtn.addEventListener('click', function() {
+        mobileSearchContainer.style.display = 'block';
+        setTimeout(() => {
+          mobileSearchInput.focus();
+        }, 100);
+      });
+      
+      closeMobileSearch.addEventListener('click', function() {
+        mobileSearchContainer.style.display = 'none';
+      });
+      
+      mobileSearchInput.addEventListener('input', function() {
+        handleSearch(this.value);
+      });
+    }
+    
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', initCarousel);
   </script>
 
 </body>
