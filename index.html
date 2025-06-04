@@ -551,6 +551,114 @@
     .carousel-container {
       touch-action: pan-y;
     }
+     .search-container {
+      position: relative;
+      margin-right: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      padding: 8px 15px;
+      transition: all 0.3s ease;
+      width: 250px;
+    }
+
+    .search-box.expanded {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    #searchInput {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 16px;
+      padding: 5px 10px;
+      width: 100%;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-box.expanded #searchInput {
+      color: #333;
+    }
+
+    #searchInput::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .search-box.expanded #searchInput::placeholder {
+      color: #aaa;
+    }
+
+    .search-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .search-results-count {
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 3px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+ /* Mobile search */
+    .mobile-search-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      margin-right: 15px;
+      cursor: pointer;
+    }
+
+    .mobile-search-container {
+      display: none;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
+    }
+
+    .mobile-search-box {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 50px;
+      padding: 10px 15px;
+      width: 100%;
+    }
+
+    .mobile-search-box input {
+      flex: 1;
+      border: none;
+      padding: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .mobile-search-box button {
+      background: none;
+      border: none;
+      color: #ef7af7;
+      font-size: 20px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -561,6 +669,30 @@
     <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?xlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80" class="slide" alt="Colorful Cupcakes">
     <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="slide" alt="Assorted Pastries">
     <div class="overlay">Made With Love 💖</div>
+  <div class="search-container">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search products...">
+        <button class="search-btn" id="searchButton"><i class="fas fa-search"></i></button>
+      </div>
+      <div class="search-results-count" id="resultsCount"></div>
+    </div>
+    
+    <button class="mobile-search-btn" id="mobileSearchBtn">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+  
+  <div class="mobile-search-container" id="mobileSearchContainer">
+    <div class="mobile-search-box">
+      <input type="text" id="mobileSearchInput" placeholder="Search products...">
+      <button id="closeMobileSearch"><i class="fas fa-times"></i></button>
+    </div>
+  </div>
+   <div class="no-results" id="noResults">
+    <i class="fas fa-search" style="font-size: 48px; margin-bottom: 20px;"></i>
+    <h2>No products found</h2>
+    <p>Try adjusting your search terms</p>
+  </div>
   </div>
   <h1>OUR PRODUCTS</h1>
   
@@ -691,9 +823,7 @@
         price: "Rs 190",
         image: "photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg"
    } ];
-
-    // Hero Slider
-    const slides = document.querySelectorAll('.slide');
+ const slides = document.querySelectorAll('.slide');
     let currentSlide = 0;
     setInterval(() => {
       slides[currentSlide].classList.remove('active');
@@ -706,14 +836,17 @@
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
     const carouselDots = document.getElementById('carouselDots');
+    const noResults = document.getElementById('noResults');
+    const resultsCount = document.getElementById('resultsCount');
     
     let currentIndex = 0;
+    let filteredProducts = [...products];
     
     // Generate product cards
     function generateProductCards() {
       carouselContainer.innerHTML = '';
       
-      products.forEach((product, index) => {
+      filteredProducts.forEach((product, index) => {
         const card = document.createElement('a');
         card.className = 'product-card';
         card.href = `product.html?name=${product.name}`;
@@ -727,15 +860,31 @@
         carouselContainer.appendChild(card);
       });
       
+      // Show/hide no results message
+      if (filteredProducts.length === 0) {
+        noResults.style.display = 'block';
+        document.querySelector('.carousel-nav').style.display = 'none';
+        document.querySelector('.carousel-dots').style.display = 'none';
+      } else {
+        noResults.style.display = 'none';
+        document.querySelector('.carousel-nav').style.display = 'flex';
+        document.querySelector('.carousel-dots').style.display = 'flex';
+      }
+      
       // Initialize positions
       updateCarousel();
+      
+      // Update results count
+      resultsCount.textContent = `${filteredProducts.length} product${filteredProducts.length !== 1 ? 's' : ''} found`;
+      resultsCount.style.opacity = '1';
+      setTimeout(() => { resultsCount.style.opacity = '0'; }, 2000);
     }
     
     // Generate dots for navigation
     function generateDots() {
       carouselDots.innerHTML = '';
       
-      for (let i = 0; i < products.length; i++) {
+      for (let i = 0; i < filteredProducts.length; i++) {
         const dot = document.createElement('div');
         dot.className = 'dot';
         if (i === 0) dot.classList.add('active');
@@ -777,12 +926,12 @@
       
       // Update button states
       prevBtn.disabled = currentIndex === 0;
-      nextBtn.disabled = currentIndex === products.length - 1;
+      nextBtn.disabled = currentIndex === filteredProducts.length - 1;
     }
     
     // Next product
     function nextProduct() {
-      if (currentIndex < products.length - 1) {
+      if (currentIndex < filteredProducts.length - 1) {
         currentIndex++;
         updateCarousel();
       }
@@ -796,6 +945,26 @@
       }
     }
     
+    // Search functionality
+    function filterProducts(searchTerm) {
+      if (!searchTerm) {
+        return [...products];
+      }
+      
+      const term = searchTerm.toLowerCase();
+      return products.filter(product => 
+        product.title.toLowerCase().includes(term) || 
+        product.name.toLowerCase().includes(term)
+      );
+    }
+    
+    function handleSearch(searchTerm) {
+      filteredProducts = filterProducts(searchTerm);
+      currentIndex = 0;
+      generateProductCards();
+      generateDots();
+    }
+    
     // Initialize carousel
     function initCarousel() {
       generateProductCards();
@@ -805,32 +974,44 @@
       prevBtn.addEventListener('click', prevProduct);
       nextBtn.addEventListener('click', nextProduct);
       
-      // Add swipe support for mobile
-      let touchStartX = 0;
-      let touchEndX = 0;
+      // Search input event listeners
+      const searchInput = document.getElementById('searchInput');
+      const mobileSearchInput = document.getElementById('mobileSearchInput');
+      const searchButton = document.getElementById('searchButton');
+      const mobileSearchBtn = document.getElementById('mobileSearchBtn');
+      const closeMobileSearch = document.getElementById('closeMobileSearch');
+      const mobileSearchContainer = document.getElementById('mobileSearchContainer');
+      const searchBox = document.querySelector('.search-box');
       
-      carouselContainer.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
+      // Desktop search
+      searchInput.addEventListener('input', function() {
+        if (this.value) {
+          searchBox.classList.add('expanded');
+        } else {
+          searchBox.classList.remove('expanded');
+        }
+        handleSearch(this.value);
       });
       
-      carouselContainer.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
+      searchButton.addEventListener('click', function() {
+        handleSearch(searchInput.value);
       });
       
-      function handleSwipe() {
-        const swipeThreshold = 50; // Minimum swipe distance to trigger
-        
-        if (touchStartX - touchEndX > swipeThreshold) {
-          // Swipe left - next product
-          nextProduct();
-        }
-        
-        if (touchEndX - touchStartX > swipeThreshold) {
-          // Swipe right - previous product
-          prevProduct();
-        }
-      }
+      // Mobile search
+      mobileSearchBtn.addEventListener('click', function() {
+        mobileSearchContainer.style.display = 'block';
+        setTimeout(() => {
+          mobileSearchInput.focus();
+        }, 100);
+      });
+      
+      closeMobileSearch.addEventListener('click', function() {
+        mobileSearchContainer.style.display = 'none';
+      });
+      
+      mobileSearchInput.addEventListener('input', function() {
+        handleSearch(this.value);
+      });
     }
     
     // Initialize on load
