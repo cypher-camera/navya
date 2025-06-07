@@ -488,6 +488,40 @@
         opacity: 0;
       }
     }
+    
+    /* New styles for WhatsApp button */
+    .whatsapp-btn-container {
+      margin-top: 30px;
+    }
+    
+    .whatsapp-btn {
+      background: linear-gradient(to right, #25D366, #128C7E);
+      color: white;
+      padding: 15px 35px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(18, 140, 126, 0.4);
+      font-weight: 600;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      width: 100%;
+    }
+    
+    .whatsapp-btn i {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+    
+    .whatsapp-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(18, 140, 126, 0.6);
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -501,7 +535,7 @@
   <div class="container">
     <div class="product-image">
       <div class="image-container">
-        <img id="product-img" src="" alt="Product">
+        <img id="product-img" src="photos/cheesecake1.jpeg" alt="Cheesecake">
         <div class="floating-element"></div>
         <div class="floating-element"></div>
         <div class="floating-element"></div>
@@ -509,11 +543,11 @@
     </div>
     
     <div class="product-details">
-      <h1 class="product-title" id="product-name">Product Name</h1>
+      <h1 class="product-title" id="product-name">Cheesecake</h1>
       
       <div class="price">
-        <span class="old-price">Rs. 85.00</span>
-        <span class="new-price" id="product-price">Rs. 70.00</span>
+        <span class="old-price">Rs. 150.00</span>
+        <span class="new-price" id="product-price">Rs. 120.00</span>
         <span class="sold-out">Limited Stock!</span>
       </div>
       
@@ -537,9 +571,13 @@
         </ul>
       </div>
       
-      <button class="copy-button" onclick="copyPhone()">
-        <i class="fas fa-phone-alt"></i> Copy Phone Number
-      </button>
+      <!-- WhatsApp button container -->
+      <div class="whatsapp-btn-container">
+        <a id="whatsapp-link" class="whatsapp-btn" href="#" target="_blank">
+          <i class="fab fa-whatsapp"></i> Order via WhatsApp
+        </a>
+      </div>
+      
       <div class="copied-msg" id="copied-msg">
         <i class="fas fa-check-circle"></i> Phone number copied to clipboard!
       </div>
@@ -594,70 +632,81 @@
       },
       cheesecake: {
         name: "Cheesecake",
-        price: "Rs. 120.00",
+        price: "Rs. 170.00",
         image: "photos/cheesecake1.jpeg"
       },
       classicbrownie: {
         name: "Classic Brownie",
-        price: "Rs. 60.00",
+        price: "Rs. 45.00",
         image: "photos/Brownie 1.jpg"
       },
       cookies: {
-        name: "Cookies",
-        price: "Rs. 80.00",
+        name: "Cookies/kg",
+        price: "Rs. 700.00",
         image: "photos/cookies1.jpeg"
       },
       cupcakes: {
         name: "Cupcakes",
-        price: "Rs. 90.00",
+        price: "Rs. 50.00",
         image: "photos/cupcakes.jpeg"
       },
       glasscake: {
         name: "Glass Cake",
-        price: "Rs. 110.00",
+        price: "Rs. 70.00",
         image: "photos/glasscake2.jpeg"
       },
       icingcake: {
         name: "Icing Cake",
-        price: "Rs. 150.00",
+        price: "Rs. 600.00",
         image: "photos/icingcake.jpeg"
       },
       jarcake: {
         name: "Jar Cake",
-        price: "Rs. 70.00",
+        price: "Rs. 150.00",
         image: "photos/jarcake1.jpeg"
       },
       loafcake: {
         name: "Loaf Cake",
-        price: "Rs. 80.00",
+        price: "Rs. 50.00",
         image: "photos/loafcake1.jpeg"
       },
       muffins: {
         name: "Muffins",
-        price: "Rs. 70.00",
+        price: "Rs. 80.00",
         image: "photos/muffins1.jpeg"
       },
       nankhatai: {
         name: "Nankhatai",
-        price: "Rs. 60.00",
+        price: "Rs. 700.00",
         image: "photos/nankhatai1.jpeg"
       },
       sizzlerbrownie: {
         name: "Sizzler Brownie",
-        price: "Rs. 100.00",
+        price: "Rs. 45.00",
         image: "photos/sizzlerbrownie.jpg"
       },
       tubcake: {
         name: "Tub Cake",
-        price: "Rs. 90.00",
+        price: "Rs. 250.00",
         image: "photos/tubcake1.jpg"
       },
       special: {
-        name: "Special",
-        price: "Rs. 150.00",
+        name: "Thandai Powder",
+        price: "Rs. 190.00",
         image: "photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg"
+      },
+        drycake: {
+        name:  "Dry Cake",
+        price: "Rs 150",
+        image: "drycake.jpg"
+      },
+        donut: {
+        name:"Donut",
+        price: "Rs 60",
+        image: "photos/donut1.webp"
+      },
       }
-    };
+
 
     // Load product
     document.addEventListener('DOMContentLoaded', () => {
@@ -665,11 +714,16 @@
       
       const params = new URLSearchParams(window.location.search);
       const productKey = params.get("name");
-      const product = products[productKey] || Object.values(products)[0];
+      const product = products[productKey] || products.cheesecake;
       
       document.getElementById("product-name").textContent = product.name;
       document.getElementById("product-price").textContent = product.price;
       document.getElementById("product-img").src = product.image;
+      
+      // Update WhatsApp message
+      const whatsappLink = document.getElementById("whatsapp-link");
+      const message = `Hi! I'm interested in ${product.name} for ${product.price}`;
+      whatsappLink.href = `https://wa.me/+919878481932?text=${encodeURIComponent(message)}`;
       
       // Add subtle parallax effect on mouse move
       const imageContainer = document.querySelector('.image-container');
