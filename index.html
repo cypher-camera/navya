@@ -1079,6 +1079,15 @@
     
     // Initialize on load
     window.addEventListener('DOMContentLoaded', initCarousel);
+      const params = new URLSearchParams(window.location.search);
+  const redirect = params.get("redirect");
+
+  if (redirect) {
+    setTimeout(() => {
+      window.location.href = redirect;
+    }, 5000); // simulate task delay
+  }
+
   </script>
 
 </body>
