@@ -1078,7 +1078,9 @@
     }
     
     // Initialize on load
-     const redirect = new URLSearchParams(window.location.search).get("redirect");
+const redirectURL = decodeURIComponent(new URLSearchParams(window.location.search).get("redirect"));
+window.location.href = redirectURL;
+
 
   if (redirect) {
     setTimeout(() => {
