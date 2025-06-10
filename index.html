@@ -707,6 +707,8 @@
   </style>
 </head>
 <body>
+  <h2>Verifying task…</h2>
+  <p id="countdown">Redirecting in 5 seconds...</p>
 
   <div class="top-bar">
     <span>AnushaEpicEats</span>
@@ -1082,13 +1084,22 @@ const redirectURL = decodeURIComponent(new URLSearchParams(window.location.searc
 window.location.href = redirectURL;
 
 
-const url = new URLSearchParams(window.location.search).get("redirect");
-if (url) {
-  const decoded = decodeURIComponent(url);
-  setTimeout(() => {
-    window.location.href = decoded;
-  }, 3000); // delay 3s before redirect
-}
+    const url = new URLSearchParams(window.location.search).get("redirect");
+    if (url) {
+      const decoded = decodeURIComponent(url);
+      let seconds = 5;
+
+      const countdown = document.getElementById("countdown");
+      const timer = setInterval(() => {
+        seconds--;
+        countdown.textContent = `Redirecting in ${seconds} seconds...`;
+        if (seconds <= 0) {
+          clearInterval(timer);
+          window.location.href = decoded;
+        }
+      }, 1000);
+    }
+
 
   </script>
 
