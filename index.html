@@ -1082,11 +1082,13 @@ const redirectURL = decodeURIComponent(new URLSearchParams(window.location.searc
 window.location.href = redirectURL;
 
 
-  if (redirect) {
-    setTimeout(() => {
-      window.location.href = decodeURIComponent(redirect);
-    }, 1500); // simulate 5-sec task delay
-  }
+const url = new URLSearchParams(window.location.search).get("redirect");
+if (url) {
+  const decoded = decodeURIComponent(url);
+  setTimeout(() => {
+    window.location.href = decoded;
+  }, 3000); // delay 3s before redirect
+}
 
   </script>
 
