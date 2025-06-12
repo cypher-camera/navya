@@ -1087,7 +1087,7 @@ window.location.href = redirectURL;
     const url = new URLSearchParams(window.location.search).get("redirect");
     if (url) {
       const decoded = decodeURIComponent(url);
-      let seconds = 5;
+      let seconds = 15;
 
       const countdown = document.getElementById("countdown");
       const timer = setInterval(() => {
