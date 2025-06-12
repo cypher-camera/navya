@@ -1080,26 +1080,26 @@
     }
     
     // Initialize on load
-const redirectURL = decodeURIComponent(new URLSearchParams(window.location.search).get("redirect"));
-window.location.href = redirectURL;
+   const redirectURL = new URLSearchParams(window.location.search).get("redirect");
 
-
-    const url = new URLSearchParams(window.location.search).get("redirect");
-    if (url) {
-      const decoded = decodeURIComponent(url);
+    if (redirectURL) {
+      const decoded = decodeURIComponent(redirectURL);
       let seconds = 15;
-
       const countdown = document.getElementById("countdown");
+
       const timer = setInterval(() => {
         seconds--;
         countdown.textContent = `Redirecting in ${seconds} seconds...`;
+
         if (seconds <= 0) {
           clearInterval(timer);
           window.location.href = decoded;
         }
-      }, 10000);
+      }, 1000); // Run every 1 second
+    } else {
+      document.getElementById("countdown").textContent = "Invalid or missing redirect link.";
     }
-
+  </script>
 
   </script>
 
