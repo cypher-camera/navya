@@ -707,8 +707,7 @@
   </style>
 </head>
 <body>
-  <h2>Verifying task…</h2>
-  <p id="countdown">Redirecting in 5 seconds...</p>
+
 
   <div class="top-bar">
     <span>AnushaEpicEats</span>
@@ -1084,7 +1083,7 @@
 
     if (redirectURL) {
       const decoded = decodeURIComponent(redirectURL);
-      let seconds = 3;
+      let seconds = 60;
       const countdown = document.getElementById("countdown");
 
       const timer = setInterval(() => {
