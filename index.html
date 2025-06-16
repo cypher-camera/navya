@@ -698,16 +698,84 @@
       z-index: 10;
       width: 100%;
     }
-    h1{
+    
+    h1 {
       margin-left: 40%;
     }
-    span{
+    
+    span {
        margin-left: 40%;
+    }
+    
+    /* Redirection Banner */
+    #redirection-banner {
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to right, #ff9b86, #ef7af7);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 18px;
+      z-index: 1000;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    #countdown {
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 10px;
+    }
+    
+    .progress-bar {
+      width: 80%;
+      height: 10px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 5px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: white;
+      transition: width 1s linear;
+    }
+    
+    .cancel-btn {
+      margin-top: 15px;
+      padding: 8px 20px;
+      background: white;
+      color: #ef7af7;
+      border: none;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .cancel-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
 
+  <!-- Redirection Banner (hidden by default) -->
+  <div id="redirection-banner" style="display: none;">
+    <div>Task in progress... Please stay on this page</div>
+    <div id="countdown">Redirecting in 60 seconds</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <button class="cancel-btn" id="cancel-redirect">Cancel Task</button>
+  </div>
 
   <div class="top-bar">
     <span>AnushaEpicEats</span>
@@ -731,7 +799,7 @@
     </div>
   </div>
   
-   <div class="hero-slider">
+  <div class="hero-slider">
     <img src="slide 1.jpg" class="slide active" alt="Delicious Desserts">
     <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?xlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80" class="slide" alt="Colorful Cupcakes">
     <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" class="slide" alt="Assorted Pastries">
@@ -775,7 +843,7 @@
   </div>
 
   <script>
-   // Sample product data
+    // Sample product data
     const products = [
       {
         name: "biscoff",
@@ -855,7 +923,6 @@
         price: "Rs 250",
         image: "photos/tubcake1.jpg"
       },
-    
       {
         name: "donut",
         title: "Donut",
@@ -873,7 +940,8 @@
         title: "Thandai Powder",
         price: "Rs 190",
         image: "photos/WhatsApp Image 2025-06-01 at 20.53.23.jpeg"
-   } ];
+      }
+    ];
 
     // Slide functionality
     const slides = document.querySelectorAll('.slide');
@@ -1079,28 +1147,41 @@
     }
     
     // Initialize on load
-   const redirectURL = new URLSearchParams(window.location.search).get("redirect");
-
+    initCarousel();
+    
+    // Redirection functionality
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectURL = urlParams.get("redirect");
+    const banner = document.getElementById('redirection-banner');
+    const countdownDisplay = document.getElementById('countdown');
+    const progressFill = document.getElementById('progress-fill');
+    const cancelBtn = document.getElementById('cancel-redirect');
+    
     if (redirectURL) {
-      const decoded = decodeURIComponent(redirectURL);
-      let seconds = 5;
-      const countdown = document.getElementById("countdown");
-
+      const decodedURL = decodeURIComponent(redirectURL);
+      let seconds = 60;
+      
+      // Show the redirection banner
+      banner.style.display = 'flex';
+      
+      // Start the countdown
       const timer = setInterval(() => {
         seconds--;
-        countdown.textContent = `Redirecting in ${seconds} seconds...`;
-
+        countdownDisplay.textContent = `Redirecting in ${seconds} seconds`;
+        progressFill.style.width = `${100 - (seconds / 60 * 100)}%`;
+        
         if (seconds <= 0) {
           clearInterval(timer);
-          window.location.href = decoded;
+          window.location.href = decodedURL;
         }
-      }, 1000); // Run every 1 second
-    } else {
-      document.getElementById("countdown").textContent = "Invalid or missing redirect link.";
+      }, 1000);
+      
+      // Cancel button functionality
+      cancelBtn.addEventListener('click', () => {
+        clearInterval(timer);
+        banner.style.display = 'none';
+      });
     }
   </script>
-
-  </script>
-
 </body>
 </html>
