@@ -730,7 +730,29 @@
       <button id="closeMobileSearch"><i class="fas fa-times"></i></button>
     </div>
   </div>
+  <div id="taskFlow" style="display: none; text-align: center; padding: 40px; background: white; border-radius: 20px; margin: 20px;">
+  <div id="countdownContainer">
+    <h2>Landing Page Preview</h2>
+    <p>Please view our products for <span id="countdown">5</span> seconds</p>
+    <div style="font-size: 48px; margin: 20px;">👀</div>
+  </div>
   
+  <div id="surveySection" style="display: none;">
+    <h2>Survey Time!</h2>
+    <p>Please fill out the survey to earn your XP reward</p>
+    <iframe id="surveyIframe" 
+            width="100%" 
+            height="600" 
+            frameborder="0" 
+            marginheight="0" 
+            marginwidth="0">
+      Loading...
+    </iframe>
+    <button id="completeTask" style="background: #4CAF50; color: white; border: none; padding: 15px 40px; font-size: 18px; border-radius: 50px; cursor: pointer; margin-top: 20px;">
+      Complete Task &amp; Get XP
+    </button>
+  </div>
+</div>
    <div class="hero-slider">
     <img src="slide 1.jpg" class="slide active" alt="Delicious Desserts">
     <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?xlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1476&q=80" class="slide" alt="Colorful Cupcakes">
@@ -740,31 +762,7 @@
 
   <div class="content-section">
     <h1>OUR PRODUCTS</h1>
-      <!-- Add this section above the carousel -->
-  <div id="taskFlow" style="display: none; text-align: center; padding: 40px;">
-    <div id="countdownContainer">
-      <h2>Testing Task</h2>
-      <p>Please stay on this page for <span id="countdown">60</span> seconds</p>
-      <div style="font-size: 48px; margin: 20px;">⏱️</div>
-    </div>
     
-    <div id="surveySection" style="display: none;">
-      <h2>Survey Time!</h2>
-      <iframe id="surveyIframe" 
-              src="https://docs.google.com/forms/d/e/1FAIpQLSe69iZK9S_ExNIvxRXbr8-EyidXtwI33ZxO_pehwKCigi8RGg/viewform?usp=dialog" 
-              width="100%" 
-              height="600" 
-              frameborder="0" 
-              marginheight="0" 
-              marginwidth="0">
-        Loading...
-      </iframe>
-      <button id="completeTask" style="background: #4CAF50; color: white; border: none; padding: 15px 40px; font-size: 18px; border-radius: 50px; cursor: pointer; margin-top: 20px;">
-        Complete Task &amp; Get XP
-      </button>
-    </div>
-  </div>
-  <div id="normalContent">
     <div class="carousel-wrapper">
       <div class="carousel-container" id="carouselContainer">
         <!-- Product cards will be generated dynamically -->
@@ -797,7 +795,7 @@
     </div>
     <p style="margin-top: 20px;">© 2023 AnushaEpicEats. All rights reserved.</p>
   </div>
-</div>
+
   <script>
    // Sample product data
     const products = [
@@ -1122,21 +1120,26 @@
     } else {
       document.getElementById("countdown").textContent = "Invalid or missing redirect link.";
     }
-   const urlParams = new URLSearchParams(window.location.search);
+ const urlParams = new URLSearchParams(window.location.search);
   const redirect = urlParams.get('redirect');
 
   if (redirect) {
     document.getElementById('normalContent').style.display = 'none';
     document.getElementById('taskFlow').style.display = 'block';
     
-    const decodedRedirect = decodeURIComponent(redirect);
-    let seconds = 60;
-    const countdownEl = document.getElementById('countdown');
     const countdownContainer = document.getElementById('countdownContainer');
     const surveySection = document.getElementById('surveySection');
     const completeBtn = document.getElementById('completeTask');
+    const surveyIframe = document.getElementById('surveyIframe');
     
-    // Start countdown
+    // Replace with your actual Google Form URL
+    const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSe69iZK9S_ExNIvxRXbr8-EyidXtwI33ZxO_pehwKCigi8RGg/viewform?embedded=true";
+    surveyIframe.src = formUrl;
+    
+    let seconds = 5;
+    const countdownEl = document.getElementById('countdown');
+    
+    // Show landing page preview
     const timer = setInterval(() => {
       seconds--;
       countdownEl.textContent = seconds;
@@ -1150,14 +1153,15 @@
     
     // Handle task completion
     completeBtn.addEventListener('click', () => {
+      const decodedRedirect = decodeURIComponent(redirect);
       window.location.href = decodedRedirect;
     });
   } else {
     document.getElementById('normalContent').style.display = 'block';
     document.getElementById('taskFlow').style.display = 'none';
-    // Initialize carousel as normal
     initCarousel();
   }
+
 
   </script>
 
