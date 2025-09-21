@@ -3,151 +3,206 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>For Mannat - A Romantic 3D Website</title>
+<title>For Mannat - Romantic Mobile Version</title>
 <style>
-  /* Reset & base styling */
+  /* Base and reset */
   body, html {
     margin: 0; padding: 0; height: 100%;
-    overflow-x: hidden;
-    font-family: 'Poppins', sans-serif;
-    background: #2b0000; /* dark wine-red base */
+    background: #2b0000;
     color: #f8f0f5;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
     scroll-behavior: smooth;
   }
+
+  /* Container */
   #container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem 4rem;
     position: relative;
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-  }
-  canvas {
-    display: block;
-    position: fixed;
-    top: 0; left: 0;
-    z-index: 0;
+    background:
+      radial-gradient(circle at 50% 50%, #7b2424 10%, transparent 45%),
+      repeating-radial-gradient(circle at 50% 50%, #531717 3%, transparent 7%);
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* Main landing content wrapper */
-  .landing-text {
+  /* Floating heart - CSS animation */
+  .heart {
+    width: 100px;
+    height: 90px;
     position: relative;
-    z-index: 10;
-    text-align: center;
-    margin-top: 35vh;
+    margin: 3rem auto 1rem;
+    cursor: pointer;
+    animation: floatUpDown 4s ease-in-out infinite;
+  }
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 52px;
+    height: 80px;
+    background: #7b2424;
+    border-radius: 52px 52px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 50% 100%;
+    box-shadow:
+      0 0 15px #b54c4caa,
+      inset 0 0 12px #e17373;
+  }
+  .heart::after {
+    left: 48px;
+    transform: rotate(45deg);
+    border-radius: 52px 52px 0 0;
+  }
+  .heart::before {
+    left: 0;
+  }
+  @keyframes floatUpDown {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+  /* Spark particles effect on click (brief) */
+  .spark {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: #f7cbc7;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: sparkleMove 1s ease forwards;
+  }
+  @keyframes sparkleMove {
+    to {
+      transform: translateY(-40px) translateX(20px) scale(0);
+      opacity: 0;
+    }
   }
 
-  /* Glowing 3D style text 'Mannat' */
+  /* Glowing text "Mannat" */
   #glowText {
     font-weight: 900;
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     letter-spacing: 0.15em;
     color: #a33a3a;
     text-transform: uppercase;
     text-shadow:
-      0 0 5px #e75c5c,
-      0 0 10px #b74949,
+      0 0 8px #e75c5c,
+      0 0 14px #b74949,
       0 0 30px #7c2c2c,
       0 0 40px #7c2c2c;
-    perspective: 1000px;
     user-select: none;
+    margin-bottom: 3rem;
   }
 
-  /* Gallery section styling */
-  section#gallery {
-    height: 70vh;
-    background: #3b0b0b;
+  /* Gallery section - minimal decorative */
+  #gallery {
+    width: 100%;
+    max-width: 500px;
+    height: 120px;
+    background: rgba(123, 36, 36, 0.25);
+    border-radius: 12px;
+    box-shadow: 0 0 15px #7a2c2cbb inset;
     position: relative;
-    z-index: 5;
+    margin-bottom: 3rem;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #d1b7b7cc;
     font-size: 1.2rem;
-    user-select: none;
-  }
-  #gallery h2 {
-    z-index: 10;
-    position: relative;
   }
 
-  /* Love notes section styling */
-  section#loveNotes {
-    min-height: 100vh;
-    background: #2d0000;
-    padding: 2rem 1rem 5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    position: relative;
-    color: #f0d9d9ee;
+  /* Tulip petal shapes (CSS) floating as decoration */
+  .tulip-petal {
+    position: absolute;
+    width: 25px;
+    height: 40px;
+    background: #a94d4d;
+    border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%;
+    box-shadow: 0 0 5px #b55e5e;
+    opacity: 0.6;
+    animation: floatTulip 6s ease-in-out infinite;
+  }
+  @keyframes floatTulip {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .tulip1 { top: 10px; left: 15%; animation-delay: 0s; }
+  .tulip2 { top: 35px; left: 35%; animation-delay: 2s; }
+  .tulip3 { top: 15px; left: 60%; animation-delay: 4s; }
+  .tulip4 { top: 40px; left: 80%; animation-delay: 1.5s; }
+
+  /* Love notes section */
+  #loveNotes {
+    width: 100%;
+    max-width: 480px;
+    background: #4b1a1a;
+    padding: 1.5rem 1.5rem 3rem;
+    border-radius: 16px;
+    box-shadow: 0 0 24px #b84c4c;
   }
   #loveNotes h2 {
-    margin-bottom: 0.5rem;
+    color: #f8e5e5;
     font-weight: 700;
-    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
   }
   #noteInput {
-    width: 90%;
-    max-width: 400px;
-    padding: 1rem;
-    font-size: 1rem;
-    border-radius: 12px;
+    width: 100%;
+    height: 80px;
     border: none;
-    outline: none;
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    background: #7c2c2c;
+    color: #fff;
+    resize: none;
     box-shadow: inset 0 0 8px #a74444;
-    background: #4b1a1a;
-    color: #eedede;
   }
   #addNoteBtn {
     margin-top: 1rem;
-    padding: 0.6rem 2rem;
-    font-size: 1rem;
-    color: #fff;
-    background: #7c2c2c;
+    width: 100%;
+    padding: 0.8rem 0;
+    background: #831818;
     border: none;
-    border-radius: 40px;
+    border-radius: 30px;
+    color: white;
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 0 10px #b84c4c;
+    box-shadow: 0 0 12px #bb5b5b;
     transition: background 0.3s ease;
   }
   #addNoteBtn:hover {
-    background: #bb5b5b;
+    background: #c14d4d;
   }
-
-  /* Love note cards container */
   #notesContainer {
-    position: relative;
-    width: 100%;
-    max-width: 1000px;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 10px;
   }
-  /* Each love note card style */
   .noteCard {
     background: #531717cc;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
     box-shadow: 0 0 15px #a94e4ecc;
-    border-radius: 16px;
-    padding: 1rem 1.25rem;
-    max-width: 200px;
-    min-width: 160px;
-    font-size: 1rem;
+    min-width: 120px;
+    max-width: 160px;
+    font-size: 0.95rem;
     color: white;
     cursor: default;
-    transform-style: preserve-3d;
-    transition: transform 0.25s ease;
-    perspective: 700px;
     user-select: text;
-    position: relative;
+    transition: box-shadow 0.3s ease;
   }
   .noteCard:hover {
-    transform: rotateY(10deg) rotateX(7deg) translateZ(10px);
     box-shadow: 0 0 25px #e47a7a;
   }
 
-  /* Play/Pause music button styling */
+  /* Music player */
   #musicControl {
     position: fixed;
     bottom: 20px;
@@ -175,379 +230,95 @@
     height: 25px;
   }
 
-  /* Responsive adjustments */
-  @media screen and (max-width: 600px) {
+  /* Responsive text sizes */
+  @media (max-width: 400px) {
     #glowText {
       font-size: 2.5rem;
-      letter-spacing: 0.1em;
-    }
-    #loveNotes h2 {
-      font-size: 1.5rem;
     }
     .noteCard {
-      max-width: 140px;
+      max-width: 130px;
       font-size: 0.9rem;
     }
   }
 </style>
 </head>
 <body>
-<div id="container"></div>
-
-<div class="landing-text" aria-label="Romantic name reveal section">
-  <div id="glowText" aria-live="polite"></div>
+<div id="container">
+  <div class="heart" aria-label="Floating heart symbol, tap to sparkle"></div>
+  <div id="glowText" aria-live="polite" role="heading" aria-level="1">Mannat</div>
+  <section id="gallery" aria-label="Minimalist tulip decoration gallery">
+    <div class="tulip-petal tulip1"></div>
+    <div class="tulip-petal tulip2"></div>
+    <div class="tulip-petal tulip3"></div>
+    <div class="tulip-petal tulip4"></div>
+    A Dreamy Space With Floating Tulips
+  </section>
+  <section id="loveNotes" aria-label="Interactive love notes section">
+    <h2>Love Notes for Mannat</h2>
+    <textarea id="noteInput" placeholder="Write a message..."></textarea>
+    <button id="addNoteBtn" aria-label="Add love note">Add Note</button>
+    <div id="notesContainer" aria-live="polite"></div>
+  </section>
 </div>
-
-<section id="gallery" aria-label="Minimalist gallery with floating tulip decorations">
-  <h2>A Dreamy Space With Floating Tulips</h2>
-</section>
-
-<section id="loveNotes" aria-label="Love notes interactive section">
-  <h2>Love Notes for Mannat</h2>
-  <textarea id="noteInput" rows="3" aria-label="Write your love note here" placeholder="Write a message..."></textarea>
-  <button id="addNoteBtn" aria-label="Add love note">Add Note</button>
-  <div id="notesContainer" aria-live="polite"></div>
-</section>
-
 <button id="musicControl" aria-label="Toggle romantic background music" title="Play / Pause Music">
   <svg viewBox="0 0 24 24">
     <polygon id="musicIcon" points="6 4 20 12 6 20" />
   </svg>
 </button>
-
 <audio id="bgMusic" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/28/audio_5d770b3c07.mp3?filename=soft-romantic-melody-157.mp3" crossorigin="anonymous"></audio>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/controls/OrbitControls.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/geometries/TextGeometry.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/libs/fontloader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.136.0/examples/fonts/helvetiker_regular.typeface.json"></script>
 <script>
-  // Setup scene basics
-  const container = document.getElementById('container');
-  const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2('#3b0b0b', 0.05);
-
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 1.5, 5);
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setClearColor('#2b0000', 1);
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(window.devicePixelRatio);
-  container.appendChild(renderer.domElement);
-
-  // Controls - subtle orbit for user interaction on 3D heart and gallery
-  const controls = new THREE.OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.07;
-  controls.minDistance = 2;
-  controls.maxDistance = 8;
-  controls.maxPolarAngle = Math.PI / 2.2;
-
-  // Light setup
-  const ambientLight = new THREE.AmbientLight(0xb35a5a, 0.5);
-  scene.add(ambientLight);
-
-  const pointLight = new THREE.PointLight(0xd97474, 1.2, 15);
-  pointLight.position.set(0, 5, 5);
-  scene.add(pointLight);
-
-  // Heart shape creation
-  function createHeartShape() {
-    const x = 0, y = 0;
-    const heartShape = new THREE.Shape();
-
-    heartShape.moveTo(x + 0, y + 0);
-    heartShape.bezierCurveTo(x + 0, y + 0, x + 2, y + 3, x + 0, y + 5);
-    heartShape.bezierCurveTo(x - 2, y + 3, x + 0, y + 0, x + 0, y + 0);
-    
-    // Better heart shape with custom path
-    heartShape.moveTo(0, 0);
-    heartShape.bezierCurveTo(0, 0, 1, 2, 0, 3);
-    heartShape.bezierCurveTo(-1, 2, 0, 0, 0, 0);
-    return heartShape;
+  // Heart sparkles on tap/click
+  const heart = document.querySelector('.heart');
+  function createSpark(x, y) {
+    const spark = document.createElement('div');
+    spark.classList.add('spark');
+    spark.style.left = `${x}px`;
+    spark.style.top = `${y}px`;
+    document.getElementById('container').appendChild(spark);
+    setTimeout(() => spark.remove(), 1000);
   }
-
-  // For a nicer heart from example shapes:
-  // I will use a classic 2D heart shape param and extrude as mesh with wine-red material
-  const heartShape = new THREE.Shape();
-  heartShape.moveTo(0,0);
-  heartShape.bezierCurveTo(0, 0, 1, 1.5, 0, 3);
-  heartShape.bezierCurveTo(-1, 1.5, 0, 0, 0, 0);
-
-  // Use more complex shape from typical heart formula:
-  const heartShape2 = new THREE.Shape();
-  heartShape2.moveTo(0,0);
-  heartShape2.bezierCurveTo(0,0,0.5,1,0,1.5);
-  heartShape2.bezierCurveTo(-0.5,1,0,0,0,0);
-
-  // Actually better to code a parametric heart curve from scratch:
-  function parametricHeart(t) {
-    const x = 16 * Math.pow(Math.sin(t), 3);
-    const y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
-    return new THREE.Vector2(x/10, y/10);
-  }
-  heartShape.moveTo(parametricHeart(0).x, parametricHeart(0).y);
-  for(let i=0.1; i<=Math.PI*2; i+=0.1){
-    const p = parametricHeart(i);
-    heartShape.lineTo(p.x, p.y);
-  }
-
-  // Heart geometry extrude
-  const extrudeSettings = { depth: 0.8, bevelEnabled: true, bevelThickness: 0.12, bevelSize: 0.2, bevelSegments: 5 };
-  const heartGeometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
-
-  const heartMaterial = new THREE.MeshPhongMaterial({
-    color: '#7b2424',       // wine red base
-    emissive: '#5d1a1a',    // deeper wine glow
-    shininess: 100,
-    specular: '#ff7979',
-  });
-
-  const heartMesh = new THREE.Mesh(heartGeometry, heartMaterial);
-  heartMesh.castShadow = true;
-  heartMesh.receiveShadow = true;
-  heartMesh.position.set(0, 0.3, 0);
-  scene.add(heartMesh);
-
-  // Heart rotation params
-  let heartRotationSpeed = 0.005;
-
-  // Particle system for spark particles on heart click
-  const particleCount = 80;
-  const particlesGeometry = new THREE.BufferGeometry();
-  const positions = new Float32Array(particleCount * 3); // XYZ for each
-  const velocities = new Float32Array(particleCount * 3);
-  for (let i = 0; i < particleCount; i++) {
-    positions[i * 3 + 0] = 0;
-    positions[i * 3 + 1] = 0;
-    positions[i * 3 + 2] = 0;
-
-    velocities[i * 3 + 0] = (Math.random() - 0.5) * 0.2;
-    velocities[i * 3 + 1] = Math.random() * 0.3 + 0.1;
-    velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.2;
-  }
-  particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-  const particleMaterial = new THREE.PointsMaterial({
-    color: '#FFD1D1',
-    size: 0.06,
-    sizeAttenuation: true,
-    transparent: true,
-    opacity: 0.9,
-    depthWrite: false,
-  });
-
-  const particles = new THREE.Points(particlesGeometry, particleMaterial);
-  particles.visible = false;
-  scene.add(particles);
-
-  // Particle animation control variables
-  let particlesActive = false;
-  let particleLifetime = 0;
-
-  // On heart click, activate spark particles for a short time
-  window.addEventListener('click', (event) => {
-    // Raycast to detect heart click
-    const mouse = new THREE.Vector2();
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObject(heartMesh);
-    if (intersects.length > 0) {
-      // Activate particles
-      particles.visible = true;
-      particleLifetime = 60; // frames ~ 1 sec
-      for (let i = 0; i < particleCount; i++) {
-        positions[i * 3 + 0] = intersects[0].point.x;
-        positions[i * 3 + 1] = intersects[0].point.y;
-        positions[i * 3 + 2] = intersects[0].point.z;
-
-        velocities[i * 3 + 0] = (Math.random() - 0.5) * 0.3;
-        velocities[i * 3 + 1] = Math.random() * 0.5 + 0.1;
-        velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.3;
-      }
-      particlesGeometry.attributes.position.needsUpdate = true;
-      particlesActive = true;
+  heart.addEventListener('click', (e) => {
+    const rect = heart.getBoundingClientRect();
+    for(let i=0; i<15; i++){
+      const x = e.clientX - rect.left + (Math.random() - 0.5) * 50;
+      const y = e.clientY - rect.top + (Math.random() - 0.5) * 50;
+      createSpark(x, y);
     }
   });
 
-  // Load font for 3D glowing text animation ("Mannat")
-  const fontLoader = new THREE.FontLoader();
-  let textMesh;
-  const glowTextDiv = document.getElementById('glowText');
-
-  fontLoader.load('https://cdn.jsdelivr.net/npm/three@0.136.0/examples/fonts/helvetiker_regular.typeface.json', (font) => {
-    const textGeometry = new THREE.TextGeometry('Mannat', {
-      font: font,
-      size: 1.1,
-      height: 0.3,
-      curveSegments: 12,
-      bevelEnabled: true,
-      bevelThickness: 0.03,
-      bevelSize: 0.025,
-      bevelOffset: 0,
-      bevelSegments: 5,
-    });
-
-    textGeometry.center();
-
-    // Materials for glowing effect
-    const textMaterial = new THREE.MeshPhongMaterial({
-      color: '#a53939',
-      emissive: '#dd5555',
-      shininess: 50,
-    });
-
-    textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    textMesh.position.set(0, 2.2, 0);
-    scene.add(textMesh);
-  });
-
-  // Tulip Decorations Floating in Gallery Section
-  // Simple petal shape using CircleGeometry and extrusion
-  const tulipGroup = new THREE.Group();
-  scene.add(tulipGroup);
-
-  // Tulip petal geometry - simplified
-  function createTulip() {
-    const geometry = new THREE.ConeGeometry(0.1, 0.25, 6);
-    const material = new THREE.MeshPhongMaterial({ color: '#a94d4d', emissive: '#b55e5e', shininess: 35 });
-    const tulip = new THREE.Mesh(geometry, material);
-    return tulip;
-  }
-
-  // Create multiple tulips randomly floating in gallery background
-  const tulipCount = 25;
-  for (let i = 0; i < tulipCount; i++) {
-    const tulip = createTulip();
-    tulip.position.set(
-      (Math.random() - 0.5) * 12,
-      Math.random() * 4 + 0.2,
-      (Math.random() - 0.5) * 6
-    );
-    tulip.rotation.x = Math.random() * 0.5;
-    tulip.rotation.y = Math.random() * Math.PI * 2;
-    tulipGroup.add(tulip);
-  }
-
-  tulipGroup.position.z = -8; // position behind gallery text
-  tulipGroup.position.y = -3;
-
-  // Love Notes interaction (3D floating cards)
-  const notesContainer = document.getElementById('notesContainer');
+  // Love notes interaction
   const noteInput = document.getElementById('noteInput');
   const addNoteBtn = document.getElementById('addNoteBtn');
-
-  // Store notes in memory (could be extended to localStorage)
-  const loveNotes = [];
+  const notesContainer = document.getElementById('notesContainer');
 
   addNoteBtn.addEventListener('click', () => {
-    const noteText = noteInput.value.trim();
-    if(noteText.length === 0) return;
-    loveNotes.push(noteText);
-    addNoteCard(noteText);
+    const msg = noteInput.value.trim();
+    if(msg.length === 0) return;
+    const card = document.createElement('div');
+    card.className = 'noteCard';
+    card.textContent = msg;
+    notesContainer.appendChild(card);
     noteInput.value = '';
   });
 
-  function addNoteCard(text) {
-    const card = document.createElement('div');
-    card.className = 'noteCard';
-    card.textContent = text;
-    notesContainer.appendChild(card);
-
-    // Adding subtle 3D floating animation using CSS keyframes
-    let floatX = (Math.random() - 0.5) * 10;
-    let floatY = (Math.random() - 0.5) * 10;
-    let floatZ = (Math.random() - 0.5) * 10;
-    let floatSpeed = 0.2 + Math.random() * 0.3;
-
-    let angle = 0;
-    function animateFloat() {
-      angle += floatSpeed;
-      card.style.transform = `translate3d(${Math.sin(angle) * 5}px, ${Math.cos(angle) * 3}px, 0)`;
-      requestAnimationFrame(animateFloat);
-    }
-    animateFloat();
-  }
-
-  // Music player controls
+  // Background music toggle
   const bgMusic = document.getElementById('bgMusic');
   const musicControl = document.getElementById('musicControl');
   const musicIcon = document.getElementById('musicIcon');
 
-  let musicPlaying = false;
+  let isPlaying = false;
 
   musicControl.addEventListener('click', () => {
-    if(musicPlaying){
+    if(isPlaying){
       bgMusic.pause();
-      musicIcon.setAttribute('points', '6 4 20 12 6 20'); // Play icon
+      musicIcon.setAttribute('points', '6 4 20 12 6 20'); // play icon
     } else {
       bgMusic.play();
-      musicIcon.setAttribute('points', '6 4 10 12 6 20 10 12 20 12'); // Pause icon (simplified)
+      musicIcon.setAttribute('points', '6 4 10 12 6 20 10 12 20 12'); // pause icon style
     }
-    musicPlaying = !musicPlaying;
+    isPlaying = !isPlaying;
   });
-
-  // Animate loop
-  function animate() {
-    requestAnimationFrame(animate);
-
-    // Rotate heart slowly
-    heartMesh.rotation.y += heartRotationSpeed;
-    heartMesh.rotation.x = Math.sin(Date.now() * 0.0005) * 0.05;
-
-    // Rotate glowing text for subtle 3D effect if loaded
-    if(textMesh){
-      const t = Date.now() * 0.001;
-      textMesh.rotation.y = Math.sin(t)*0.15;
-      textMesh.rotation.x = Math.cos(t)*0.05;
-      textMesh.material.emissiveIntensity = 0.5 + 0.5 * Math.sin(t*4);
-    }
-
-    // Animate particles if active
-    if(particlesActive){
-      particleLifetime--;
-      const pos = particlesGeometry.attributes.position.array;
-      for(let i=0; i<particleCount; i++){
-        pos[i*3+0] += velocities[i*3+0];
-        pos[i*3+1] += velocities[i*3+1];
-        pos[i*3+2] += velocities[i*3+2];
-
-        // Slowly fade velocities down to simulate drag
-        velocities[i*3+0] *= 0.92;
-        velocities[i*3+1] *= 0.96;
-        velocities[i*3+2] *= 0.92;
-      }
-      particlesGeometry.attributes.position.needsUpdate = true;
-
-      if(particleLifetime <= 0){
-        particles.visible = false;
-        particlesActive = false;
-      }
-    }
-
-    // Gently float tulips up and down & rotate
-    tulipGroup.children.forEach((tulip, i) => {
-      tulip.position.y += 0.002 * Math.sin((Date.now()*0.002) + i);
-      tulip.rotation.y += 0.001;
-    });
-
-    controls.update();
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  // Responsive resize handler
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-
 </script>
 </body>
 </html>
