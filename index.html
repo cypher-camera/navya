@@ -1,564 +1,206 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Dearest Mannat</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cormorant Garamond', serif;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Am I forgiven?</title>
+  <style>
+    body{margin:0;background:#0b0b0f;color:#e7e7ec;font-family:system-ui,Segoe UI,Roboto,Arial}
+    .wrap{min-height:100dvh;display:grid;place-items:center;padding:20px}
+    .card{width:min(680px,94vw);background:#111218;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.55)}
+    .title{text-align:center;margin:6px 8px 8px;font-size:clamp(22px,4.5vw,30px)}
+    .sub{text-align:center;color:#9aa0a6;margin:0 8px 12px}
+    .question{text-align:center;margin:8px 8px 14px;font-size:clamp(18px,4vw,24px)}
+    .stage{width:220px;margin:8px auto 14px}
+    .state{display:none}
+    .state.active{display:block}
+    .cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    button{border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));color:#e7e7ec;padding:12px 16px;border-radius:14px;cursor:pointer;font-weight:600}
+    .yes{background:linear-gradient(180deg,rgba(114,224,169,.22),rgba(114,224,169,.08))}
+    .no{background:linear-gradient(180deg,rgba(255,77,109,.20),rgba(255,77,109,.06))}
+    .hint{text-align:center;color:#9aa0a6;margin-top:12px;font-size:12.5px;min-height:1em}
+    :root{
+  /* Pink theme */
+  --bg:#fff4f7;            /* page background (very light pink) */
+  --panel:#ffeaf0;         /* card background */
+  --text:#2a1a1f;          /* primary text (deep rose-brown) */
+  --muted:#7b5964;         /* secondary text */
+  --heart:#ff5c8a;         /* primary heart pink */
+  --heart2:#ff8fb1;        /* alt heart pink */
+  --accent:#ff9fbc;        /* accent mint -> pink */
+  --ring: rgba(182, 84, 122, .18); /* borders/outline */
 
-        body {
-            background: linear-gradient(to bottom, #2a0a1a, #1a0510);
-            color: #fff5ee;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-        }
+  /* Buttons */
+  --yes-bg1:#ffd1e1;
+  --yes-bg2:#ffc6da;
+  --no-bg1:#ffbfd2;
+  --no-bg2:#ffafc8;
+}
+body{
+  background:
+    radial-gradient(1200px 800px at 80% -10%, #ffe3ee 0%, transparent 60%),
+    radial-gradient(1000px 600px at -10% 110%, #ffd9e8 0%, transparent 55%),
+    var(--bg);
+}
+.yes{
+  background:linear-gradient(180deg, var(--yes-bg1), var(--yes-bg2));
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--ring));
+  color:#4a2432;
+}
+.no{
+  background:linear-gradient(180deg, var(--no-bg1), var(--no-bg2));
+  border-color: color-mix(in srgb, var(--heart) 45%, var(--ring));
+  color:#4a2432;
+}
+.glow{
+  background:
+    radial-gradient(600px 160px at 50% -10%, rgba(255,92,138,.18), transparent 60%),
+    radial-gradient(600px 160px at 50% 110%, rgba(255,159,188,.16), transparent 60%);
+}
 
-        section {
-            min-height: 100vh;
-            padding: 5rem 2rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Landing Section */
-        #landing {
-            position: relative;
-            overflow: hidden;
-        }
-
-        #canvas-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 800px;
-        }
-
-        h1 {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.5rem;
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-            background: rgba(74, 13, 43, 0.3);
-        }
-
-        nav a {
-            color: #ffdde1;
-            text-decoration: none;
-            margin: 0 1.5rem;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        nav a:hover {
-            color: #ff9ecb;
-            text-shadow: 0 0 8px rgba(255, 158, 203, 0.7);
-        }
-
-        /* Timeline Section */
-        #timeline {
-            background: rgba(42, 10, 26, 0.7);
-        }
-
-        .timeline-container {
-            position: relative;
-            max-width: 1000px;
-            width: 100%;
-            margin-top: 3rem;
-        }
-
-        .timeline-item {
-            padding: 2rem;
-            margin: 2rem 0;
-            background: rgba(90, 19, 55, 0.2);
-            border-radius: 15px;
-            border-left: 4px solid #ff6b93;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-            opacity: 0;
-            transform: translateX(-50px);
-        }
-
-        .timeline-item:nth-child(even) {
-            transform: translateX(50px);
-            border-left: none;
-            border-right: 4px solid #ff6b93;
-        }
-
-        .timeline-item:hover {
-            transform: translateX(0) scale(1.02);
-            box-shadow: 0 10px 25px rgba(200, 60, 120, 0.3);
-        }
-
-        .timeline-item h3 {
-            color: #ff9ecb;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-        }
-
-        .timeline-item p {
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
-
-        /* Love Messages Section */
-        #love-messages {
-            background: linear-gradient(to bottom, #1a0510, #2a0a1a);
-        }
-
-        .messages-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            width: 100%;
-            max-width: 1200px;
-            margin-top: 2rem;
-        }
-
-        .message-card {
-            background: rgba(120, 20, 70, 0.3);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 1px solid rgba(255, 158, 203, 0.3);
-            box-shadow: 0 5px 15px rgba(120, 20, 70, 0.3);
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .message-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(200, 60, 120, 0.4);
-        }
-
-        .message-card i {
-            font-size: 3rem;
-            color: #ff9ecb;
-            margin-bottom: 1rem;
-        }
-
-        .message-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #ffdde1;
-        }
-
-        .message-card p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        /* Music Player */
-        .music-player {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 50;
-            background: rgba(74, 13, 43, 0.7);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 158, 203, 0.3);
-            transition: transform 0.3s ease;
-        }
-
-        .music-player:hover {
-            transform: scale(1.1);
-        }
-
-        .music-player i {
-            font-size: 1.5rem;
-            color: #ffdde1;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(26, 5, 16, 0.8);
-            font-size: 1.1rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 3rem;
-            }
-            
-            .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            nav a {
-                font-size: 1rem;
-                margin: 0 0.8rem;
-            }
-            
-            .timeline-item, .timeline-item:nth-child(even) {
-                transform: translateX(0);
-                border-left: 4px solid #ff6b93;
-                border-right: none;
-            }
-            
-            .messages-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Scroll Animations */
-        .visible {
-            opacity: 1;
-            transform: translate(0) !important;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </style>
 </head>
 <body>
-    <nav>
-        <a href="#landing">Home</a>
-        <a href="#timeline">Our Story</a>
-        <a href="#love-messages">My Feelings</a>
-    </nav>
+  <div class="wrap">
+    <section class="card">
+      <h1 class="title">I’m really sorry ❤ my kuchu muchu</h1>
+      <p class="sub">am sorry for comparing my princess</p>
 
-    <section id="landing">
-        <div id="canvas-container"></div>
-        <div class="content">
-            <h1 id="main-name">Mannat</h1>
-            <p class="subtitle">Every moment with you is a dream come true</p>
+      <p class="question" id="q">Am I forgiven? 🥺</p>
+
+      <!-- Character stage: swap which Tenor embed is visible -->
+      <div class="stage">
+        <!-- START state -->
+        <div id="st-start" class="state active">
+          <div class="tenor-gif-embed" data-postid="9739658237377022608" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+            <a href="https://tenor.com/view/mochi-cat-glomp-head-rub-gif-9739658237377022608">Mochi Cat Glomp Sticker</a>
+          </div>
         </div>
-    </section>
 
-    <section id="timeline">
-        <h2>Our Beautiful Journey</h2>
-        <div >
-            <div class="timeline-item">
-                <h3>When I Realized I Love You</h3>
-                <p>It wasn't one moment but a thousand little ones that made me fall completely in love with you.</p>
-            </div>
-            <div class="timeline-item">
-                <h3>Today and Forever</h3>
-                <p>Every day with you is a gift. I look forward to creating countless more beautiful memories with you.</p>
-            </div>
+        <!-- NO-1 happy taps -->
+        <div id="st-no1" class="state">
+          <div class="tenor-gif-embed" data-postid="7251017984862143478" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+            <a href="https://tenor.com/view/happy-taps-gif-7251017984862143478">Happy Taps Sticker</a>
+          </div>
         </div>
-    </section>
 
-    <section id="love-messages">
-        <h2>What You Mean To Me</h2>
-        <div class="messages-container">
-            <div class="message-card">
-                <i class="fas fa-heart"></i>
-                <h3>My Inspiration</h3>
-                <p>You inspire me to be a better person every single day. Your strength and kindness motivate me.</p>
-            </div>
-            <div class="message-card">
-                <i class="fas fa-star"></i>
-                <h3>My Happiness</h3>
-                <p>Your smile is my favorite sight in the world. Your laughter is my favorite melody.</p>
-            </div>
-            <div class="message-card">
-                <i class="fas fa-sun"></i>
-                <h3>My Sunshine</h3>
-                <p>You brighten even my darkest days. Your love fills my life with warmth and light.</p>
-            </div>
+        <!-- NO-2 sad tears -->
+        <div id="st-no2" class="state">
+          <div class="tenor-gif-embed" data-postid="17081298557827211752" data-share-method="host" data-aspect-ratio="1.10048" data-width="100%">
+            <a href="https://tenor.com/view/peach-goma-sad-tears-gif-17081298557827211752">Peach Goma Sad Tears Sticker</a>
+          </div>
         </div>
+
+        <!-- NO-3 funny dodge -->
+        <div id="st-no3" class="state">
+          <div class="tenor-gif-embed" data-postid="2404834808256676251" data-share-method="host" data-aspect-ratio="1.23333" data-width="100%">
+            <a href="https://tenor.com/view/%E0%B8%94%E0%B8%B5%E0%B9%80%E0%B8%88%E0%B8%81%E0%B8%9A-%E0%B9%82%E0%B8%94%E0%B8%99%E0%B9%80%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B9%81%E0%B8%A5%E0%B9%89%E0%B8%A7-gif-2404834808256676251">Funny Dodge</a>
+          </div>
+        </div>
+
+        <!-- YES state -->
+        <div id="st-yes" class="state">
+          <div class="tenor-gif-embed" data-postid="13419239015106351850" data-share-method="host" data-aspect-ratio="1.27907" data-width="100%">
+            <a href="https://tenor.com/view/crystal-amaru-gif-13419239015106351850">Crystal Amaru Sticker</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta" id="cta">
+        <button id="yes" class="yes">Yes</button>
+        <button id="no" class="no">No</button>
+      </div>
+      <p class="hint" id="hint">Tap “No” if you can catch it…</p>
     </section>
+  </div>
 
-    <div class="music-player">
-        <i class="fas fa-music"></i>
-    </div>
+  <!-- Tenor embed script (only once) -->
+  <script async src="https://tenor.com/embed.js" type="text/javascript"></script>
 
-    <footer>
-        <p>Made with ❤️ for Mannat - My forever love</p>
-    </footer>
+  <script>
+  const q    = document.getElementById('q');
+  const hint = document.getElementById('hint');
+  const yes  = document.getElementById('yes');
+  const no   = document.getElementById('no');
+  const cta  = document.getElementById('cta');
 
-    <script>
-        // Three.js initialization
-        let scene, camera, renderer, heart, particles, nameText;
-        let particleSystem;
-        let isPlaying = false;
-        const audio = new Audio('https://cdn.pixabay.com/download/audio/2021/10/25/audio_172d7dec90.mp3?filename=soft-romantic-background-music-6446.mp3');
-        audio.loop = true;
+  // Tenor state helpers (from earlier)
+  const states = ['st-start','st-no1','st-no2','st-no3','st-yes'].map(id=>document.getElementById(id));
+  function show(id){ states.forEach(s=>s.classList.toggle('active', s.id===id)); }
 
-        // Initialize Three.js scene
-        function init() {
-            // Scene setup
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x2a0a1a);
-            
-            // Camera setup
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 5;
-            
-            // Renderer setup
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            document.getElementById('canvas-container').appendChild(renderer.domElement);
-            
-            // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffdde1, 0.5);
-            scene.add(ambientLight);
-            
-            const directionalLight = new THREE.DirectionalLight(0xff9ecb, 1);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
-            
-            const pointLight = new THREE.PointLight(0xff6b93, 1, 100);
-            pointLight.position.set(0, 0, 5);
-            scene.add(pointLight);
-            
-            // Create heart geometry
-            createHeart();
-            
-            // Create particles
-            createParticles();
-            
-            // Create name text
-            createNameText();
-            
-            // Handle window resize
-            window.addEventListener('resize', onWindowResize);
-            
-            // Handle clicks
-            renderer.domElement.addEventListener('click', onCanvasClick);
-            
-            // Start animation
-            animate();
-            
-            // Animate name reveal
-            setTimeout(() => {
-                document.getElementById('main-name').style.opacity = 1;
-                document.getElementById('main-name').style.transform = 'translateY(0)';
-                document.querySelector('.subtitle').style.opacity = 1;
-                document.querySelector('.subtitle').style.transform = 'translateY(0)';
-            }, 1000);
-        }
-        
-        // Create heart shape
-        function createHeart() {
-            const shape = new THREE.Shape();
-            const x = 0, y = 0;
-            shape.moveTo(x, y + 0.25);
-            shape.bezierCurveTo(x, y, x - 0.25, y, x - 0.25, y + 0.25);
-            shape.bezierCurveTo(x - 0.25, y + 0.5, x, y + 0.75, x, y + 1);
-            shape.bezierCurveTo(x, y + 0.75, x + 0.25, y + 0.5, x + 0.25, y + 0.25);
-            shape.bezierCurveTo(x + 0.25, y, x, y, x, y + 0.25);
-            
-            const extrudeSettings = {
-                depth: 0.1,
-                bevelEnabled: true,
-                bevelThickness: 0.05,
-                bevelSize: 0.05,
-                bevelSegments: 10
-            };
-            
-            const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-            const material = new THREE.MeshPhongMaterial({ 
-                color: 0xff6b93,
-                shininess: 100,
-                specular: 0xffdde1
-            });
-            
-            heart = new THREE.Mesh(geometry, material);
-            heart.scale.set(2, 2, 2);
-            scene.add(heart);
-        }
-        
-        // Create particles
-        function createParticles() {
-            const particleCount = 500;
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-            
-            for (let i = 0; i < particleCount; i++) {
-                const i3 = i * 3;
-                positions[i3] = (Math.random() - 0.5) * 10;
-                positions[i3 + 1] = (Math.random() - 0.5) * 10;
-                positions[i3 + 2] = (Math.random() - 0.5) * 10;
-                
-                colors[i3] = Math.random();
-                colors[i3 + 1] = Math.random() * 0.5;
-                colors[i3 + 2] = Math.random() * 0.5 + 0.5;
-            }
-            
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            
-            const material = new THREE.PointsMaterial({
-                size: 0.05,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.8
-            });
-            
-            particleSystem = new THREE.Points(geometry, material);
-            scene.add(particleSystem);
-        }
-        
-        // Create name text
-        function createNameText() {
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.width = 512;
-            canvas.height = 256;
-            
-            context.fillStyle = '#2a0a1a';
-            context.fillRect(0, 0, canvas.width, canvas.height);
-            
-            context.font = '80px Cormorant Garamond';
-            context.fillStyle = '#ff9ecb';
-            context.textAlign = 'center';
-            context.textBaseline = 'middle';
-            context.fillText('Mannat', canvas.width / 2, canvas.height / 2);
-            
-            const texture = new THREE.CanvasTexture(canvas);
-            const material = new THREE.MeshBasicMaterial({
-                map: texture,
-                transparent: true,
-                side: THREE.DoubleSide
-            });
-            
-            const geometry = new THREE.PlaneGeometry(4, 2);
-            nameText = new THREE.Mesh(geometry, material);
-            nameText.position.y = -2;
-            nameText.visible = false;
-            scene.add(nameText);
-        }
-        
-        // Handle window resize
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-        
-        // Handle canvas click
-        function onCanvasClick(event) {
-            // Show spark particles
-            showParticles();
-            
-            // Show name text after first click
-            if (!nameText.visible) {
-                nameText.visible = true;
-                gsap.to(nameText.scale, { x: 1.2, y: 1.2, z: 1.2, duration: 0.5, yoyo: true, repeat: 1 });
-            }
-        }
-        
-        // Show particles animation
-        function showParticles() {
-            gsap.to(particleSystem.material, { opacity: 1, duration: 0.5 });
-            gsap.to(particleSystem.rotation, { x: Math.PI * 2, duration: 2, ease: "power2.out" });
-            gsap.to(particleSystem.material, { opacity: 0, duration: 1, delay: 1 });
-        }
-        
-        // Animation loop
-        function animate() {
-            requestAnimationFrame(animate);
-            
-            // Rotate heart
-            if (heart) {
-                heart.rotation.x += 0.005;
-                heart.rotation.y += 0.008;
-            }
-            
-            // Animate particles
-            if (particleSystem) {
-                particleSystem.rotation.x += 0.001;
-                particleSystem.rotation.y += 0.002;
-            }
-            
-            renderer.render(scene, camera);
-        }
-        
-        // Initialize scroll animations
-        function initScrollAnimations() {
-            const timelineItems = document.querySelectorAll('.timeline-item');
-            const messageCards = document.querySelectorAll('.message-card');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            timelineItems.forEach(item => {
-                observer.observe(item);
-            });
-            
-            messageCards.forEach(card => {
-                observer.observe(card);
-            });
-        }
-        
-        // Music player functionality
-        document.querySelector('.music-player').addEventListener('click', function() {
-            if (isPlaying) {
-                audio.pause();
-                this.innerHTML = '<i class="fas fa-music"></i>';
-            } else {
-                audio.play();
-                this.innerHTML = '<i class="fas fa-pause"></i>';
-            }
-            isPlaying = !isPlaying;
-        });
-        
-        // Initialize everything when page loads
-        window.onload = function() {
-            init();
-            initScrollAnimations();
-        };
-    </script>
+  // Floating hearts background (call once)
+  const heartsLayer = document.createElement('div');
+  heartsLayer.style.position = 'fixed';
+  heartsLayer.style.inset = '0';
+  heartsLayer.style.pointerEvents = 'none';
+  heartsLayer.style.zIndex = '0';
+  document.body.appendChild(heartsLayer);
+
+  function spawnHeart(){
+    const h = document.createElement('div');
+    h.textContent = '❤';
+    h.style.position='absolute';
+    h.style.left = (Math.random()*100)+'vw';
+    h.style.bottom='-8vh';
+    h.style.fontSize = (14 + Math.random()*16)+'px';
+    h.style.color = Math.random()<0.5 ? '#ff4d6d' : '#ff7a90';
+    h.style.opacity = '.12';
+    h.style.filter = 'drop-shadow(0 6px 12px rgba(255,77,109,.25))';
+    const drift = (Math.random()*80 - 40);
+    const dur = 7 + Math.random()*6;
+    h.animate([
+      { transform:`translateY(0) translateX(0)` , opacity:0 },
+      { opacity:.9, offset:.1 },
+      { transform:`translateY(-120vh) translateX(${drift}px)`, opacity:0 }
+    ], { duration: dur*1000, easing:'linear' });
+    heartsLayer.appendChild(h);
+    setTimeout(()=>h.remove(), dur*1000+400);
+  }
+  setInterval(spawnHeart, 380);
+
+  // Evasive movement after 3rd No
+  let evasive=false, noClicks=0;
+  function enableEvasive(){
+    if(evasive) return;
+    evasive=true;
+    hint.textContent = "😉";
+    no.addEventListener('mouseenter', dodge, {passive:true});
+    no.addEventListener('touchstart', e=>{ e.preventDefault(); dodge(); }, {passive:false});
+    no.addEventListener('click', e=>{ e.preventDefault(); dodge(); });
+    no.addEventListener('focus', dodge);
+  }
+  function dodge(){
+    const b = cta.getBoundingClientRect(), nb = no.getBoundingClientRect();
+    const x = Math.max(0, Math.min(b.width - nb.width, Math.random()*b.width));
+    const y = Math.max(0, Math.min(b.height - nb.height, Math.random()*b.height));
+    no.style.position='relative'; no.style.left=x+'px'; no.style.top=y+'px';
+    show('st-no3'); // show your 3rd No GIF
+  }
+
+  no.addEventListener('click', ()=>{
+    if(evasive) return;
+    noClicks++;
+    if(noClicks===1){
+      q.textContent = "please maan jao ❤️";
+      show('st-no1');
+    }else if(noClicks===2){
+      // unchanged second No
+      q.textContent = "ek baar aur soch lo 🙏";
+      show('st-no2');
+    }else if(noClicks===3){
+      // third No: change text to the new line and start evasive mode
+      q.textContent = "ab no krke dikhao";
+      show('st-no3');
+      enableEvasive();
+    }
+  });
+
+  yes.addEventListener('click', ()=>{
+    q.textContent = "Thank you 💖";
+    show('st-yes');
+    yes.disabled = true; no.disabled = true;
+  });
+</script>
+
 </body>
 </html>
-
