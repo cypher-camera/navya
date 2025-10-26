@@ -170,30 +170,51 @@ body{
     no.addEventListener('focus', dodge);
   }
   function dodge(){
-    const b = cta.getBoundingClientRect(), nb = no.getBoundingClientRect();
-    const x = Math.max(0, Math.min(b.width - nb.width, Math.random()*b.width));
-    const y = Math.max(0, Math.min(b.height - nb.height, Math.random()*b.height));
-    no.style.position='relative'; no.style.left=x+'px'; no.style.top=y+'px';
-    show('st-no3'); // show your 3rd No GIF
+   
+    const container = cta;                  // the flex box holding Yes/No
+    const btn = no;
+
+    // Ensure relative positioning
+    btn.style.position = 'absolute';
+
+    // Get sizes
+    const c = container.getBoundingClientRect();
+    const b = btn.getBoundingClientRect();
+
+    // Safe padding to keep button fully visible
+    const padX = 8;                          // small gap from edges
+    const padY = 8;
+
+    // Available movement area
+    const maxX = Math.max(0, c.width  - b.width  - padX*2);
+    const maxY = Math.max(0, c.height - b.height - padY*2);
+
+    // If container is too short (mobile), expand it once
+    if (c.height < b.height + 24) {
+      container.style.minHeight = (b.height + 24) + 'px';
+    }
+
+    // Random new coordinates clamped to bounds
+    const nx = padX + Math.random() * maxX;
+    const ny = padY + Math.random() * maxY;
+
+    // Apply via translate to avoid cumulative layout drift
+    btn.style.left = padX + 'px';
+    btn.style.top  = padY + 'px';
+    btn.style.transform = `translate(${nx - padX}px, ${ny - padY}px)`;
+
+    // Also clamp within viewport in case CTA is near edges
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const rect = btn.getBoundingClientRect();
+    if (rect.right > vw)  btn.style.transform = `translate(${nx - padX - (rect.right - vw)}px, ${ny - padY}px)`;
+    if (rect.left  < 0)   btn.style.transform = `translate(${nx - padX + (0 - rect.left)}px, ${ny - padY}px)`;
+    if (rect.bottom > vh) btn.style.transform = `translate(${nx - padX}px, ${ny - padY - (rect.bottom - vh)}px)`;
+    if (rect.top    < 0)  btn.style.transform = `translate(${nx - padX}px, ${ny - padY + (0 - rect.top)}px)`;
   }
 
-  no.addEventListener('click', ()=>{
-    if(evasive) return;
-    noClicks++;
-    if(noClicks===1){
-      q.textContent = "please maan jao ❤️";
-      show('st-no1');
-    }else if(noClicks===2){
-      // unchanged second No
-      q.textContent = "ek baar aur soch lo 🙏";
-      show('st-no2');
-    }else if(noClicks===3){
-      // third No: change text to the new line and start evasive mode
-      q.textContent = "ab no krke dikhao";
-      show('st-no3');
-      enableEvasive();
-    }
-  });
+  // Make CTA a safe positioning context
+  cta.style.position = 'relative';
+  no.style.position = 'absolute';   // so left/top/translate are relative to CTA
 
   yes.addEventListener('click', ()=>{
     q.textContent = "Thank you 💖";
@@ -204,3 +225,4 @@ body{
 
 </body>
 </html>
+
